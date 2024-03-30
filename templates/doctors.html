@@ -1,0 +1,99 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+        {%for message in messages%}
+        <div class="alert alert-{{message.tags}}">{{message}}
+        <button class="close" data-dismiss="alert" aria-label="close">&times;</button></div>
+        {%endfor%}
+         <form action="doctor" method="POST">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            <h3>Add Staff</h3>
+            <div class"form-group">
+               <input type="text" class="form-control" name="name" 
+               style="margin:10px; padding:30px " placeholder="doctor's name" required>
+            </div>
+            <div class"form-group">
+               <input type="email" class="form-control" name="email" 
+               style="margin:10px; padding:30px " placeholder="doctor's email address" required>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="age" 
+               style="margin:10px; padding:30px " placeholder="doctor's age" required>
+            </div>
+            <div class"form-group">
+                <label for="address">practical training ever attended if any</label>
+               <textarea type="text" class="form-control" name="training" 
+               style="margin:10px; padding:30px ">
+            </textarea>
+            </div>
+            <div class"form-group">
+               <label for="address"><strong>Doctor's Address</strong></label>
+               <input type="text" name="address" class="form-control" style="margin:10px; padding:30px " required>
+            </div>
+            </div>
+
+            <div class="col-md-6" id="more">
+            <h3>Staff Details</h3>
+            <div class"form-group">
+               <input type="number" class="form-control" name="phone" 
+               style="margin:10px; padding:30px " placeholder="doctor's phone number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="role" 
+               style="margin:10px; padding:30px " value="Doctor" required>
+            </div>
+            <div class"form-group">
+               <select class="form-control" name="marital" style="margin:10px; padding:30px " required>
+                  <option>marital status</option>
+                 <option value="married">married</option>
+                 <option value="single">single</option>
+                 <option value="other">other</option>
+                  </select>
+            </div>
+
+            <div class"form-group">
+               <select class="form-control" name="sex" style="margin:10px; padding:30px " required>
+                  <option>gender</option>
+                 <option value="male">male</option>
+                 <option value="female">female</option>
+                  </select>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="specialty" style="margin:10px; padding:30px " placeholder="doctor's specialty">
+            </div>
+            <div class"form-group">
+                <label for="experience">Doctor experience if any</label>
+               <textarea type="text" class="form-control" name="experience" style="margin:10px; padding:30px ">
+               </textarea>
+            </div>       
+            </div>
+         </div>
+         <div class="form-group">
+         <center><button type="submit" id="submit" class="btn form-control">Submit</button></center>
+        </div>     
+   </form>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

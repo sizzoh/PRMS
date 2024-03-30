@@ -1,0 +1,79 @@
+{%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+    <!--<link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">-->
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script  src="{%static 'scripts.js'%}"></script>
+    <!--<script  src="{%static 'chart.min.js'%}"></script>-->
+    <script  src="{%static 'jquery.min.js'%}"></script>
+    <script></script>
+    </head>
+    <body onload="query()">
+    {%block content%}
+    <div class="container-l" id="attended">
+        <center><div><h5>Admin manage patients</h5></div></center>
+        <div class="form-group">
+           <a href="{%url 'customer'%}"><button class="btn btn-primary bg-success" type"button" id="new" onclick="medication()">new patient<i class="fa fa-plus"></i></button></a>
+        </div>
+        <div class="row">
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="patient_number" id="number" placeholder="patient number"></div>
+        <div class="col-md-6"><input type="text" class="form-control mb-3 p-4" name="patient_name" id="name" placeholder="patient name"></div>
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="phone" id="phone" placeholder="phone number"></div>  
+        </div>    
+         <form class="form">
+            <div class="table-responsive">
+           <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patient number</th>
+                    <th scope="col">name</th>
+                    <th scope="col">age</th>
+                    <th scope="col">gender</th>
+                    <th scope="col">marital status</th>
+                    <th scope="col">address</th>
+                    <th scope="col">contacts</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">weight (kg)</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in attended%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.file_number}}</td>
+                    <td>{{i.full_name}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.sex}}</td>
+                    <td>{{i.marital_status}}</td>
+                    <td>{{i.street}}</td>
+                    <td>{{i.client_contact}}</td>
+                    <td>{{i.dof}}</td>
+                    <td>{{i.weight}}</td>
+                       <td>
+            <a href="#"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil">Edit</i></button></a>   
+            <a href="#"><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-can">Delete</i></button></a>   
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+           </table>
+        </div>
+        </form>
+       
+    </div>
+    {%endblock%}
+    </body>
+    </html>

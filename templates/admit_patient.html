@@ -1,0 +1,163 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+        <div class="header" style="padding:30px; text-align:center;background-color:#F8F8F8"><h3>Patient medication details</h3></div>
+         <form action="admission" method="POST" id="admit_patient">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            <h4>patient past medication details</h4>
+            {%for i in data%}
+            <div class"form-group">
+               <input type="number" class="form-control" name="file_number" value="{{i.file_number}}" id="card_number" 
+               style="margin:10px; padding:30px " placeholder="file number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="name" value="{{i.name}}" id="p_name"
+               style="margin:10px; padding:30px " placeholder="full name" required>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="id_number" value="{{i.id_number}}" id="id_number" 
+               style="margin:10px; padding:30px " placeholder="unique card number" required>
+            </div>
+            
+            <div class"form-group">
+               <label for="date"><strong>Date Of Birth</strong></label>
+               <input type="text" name="dof" class="form-control" id="dof" value="{{i.dof}}" style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="age" id="age" value="{{i.age}}"
+               style="margin:10px; padding:30px " placeholder="age" required>
+            </div>
+            
+            <div class"form-group">
+               <input type="number" class="form-control" name="weight" value="{{i.weight}}" id="weight" placeholder="weight (kg)" style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+               <select type="text" class="form-control" name="day" style="margin:10px; padding:30px " required>
+                  <option value="">Day of Admission: choose one</option>
+                  <option value="monday">monday</option>
+                  <option value="tuesday">tuesday</option>
+                  <option value="wednesday">wednesday</option>
+                  <option value="thursday">thursday</option>
+                  <option value="friday">friday</option>
+                  <option value="suturday">suturday</option>
+                  <option value="sunday">sunday</option>
+               </select>
+            </div>     
+        </div>
+        
+            <div class="col-md-6" id="personal2">
+            <div class"form-group">
+                <label for"date">Date attended</label>
+               <input type="text" class="form-control" name="date" value="{{i.date}}" id="date" 
+               style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+                <label for="case">case description</label>
+               <input type="text" class="form-control" name="case_description" row="20" cols="20" 
+               value="{{i.case_description}}" id="case_description"
+               style="margin:10px; padding:30px"></input>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="full_name" value="{{i.full_name}}" id="full_name"
+               style="margin:10px; padding:30px " placeholder="consultant full name" required>
+            </div>
+            
+            <div class"form-group">
+                <label for="case"><h6>dose description</h6></label>
+               <input type="text" class="form-control" name="description" row="20" cols="20"
+               value="{{i.description}}" id="dose_description" 
+               style="margin:10px; padding:30px"></input>
+            </div>
+            <div class"form-group">
+                <label for"date">start Date</label>
+               <input type="text" class="form-control" name="start_date" id="start_date" 
+               value="{{i.start_date}}" style="margin:10px; padding:30px " required>
+            </div>
+
+            <div class"form-group">
+                <label for"date">End date</label>
+               <input type="text" class="form-control" name="end_date" id="end_date" 
+               value="{{i.end_date}}" style="margin:10px; padding:30px" required>
+            </div>
+            {%endfor%}
+        </div>
+          <div class="header" style="padding:30px; text-align:center;background-color:#E8E8E8"><h5>New visit details</h5></div>
+         <div class="col-md-6" id="personal3">
+            <div class"form-group">
+                <label for"date">date of visit</label>
+               <input type="date" class="form-control" name="visit_date" 
+               value="{{data.date_created}}" style="margin:10px; padding:30px " required>
+            </div>
+           
+            <div class"form-group">
+               <select type="text" class="form-control" name="visit_case" id="visit_case"
+               style="margin:10px; padding:30px " placeholder="case for attendence" onclick="capture()" required>
+               <option value="">Select case category</option>
+               <option value="skin">skin</option>
+               <option value="neurons">neurons</option>
+               <option value="brain">Brain</option>
+               <option value="bones">Bones</option>
+               <option value="gut">Gut</option>
+               <option value="children">Children</option>
+               <option value="radiologist">Radiology</option>
+               <option value="counseling">Counseling</option>
+               <option value="plastic surgury">plastic surgury</option>
+               <option value="eyes">Eyes</option>
+               <option value="dentist">Dental</option>
+               <option value="heart">Heart</option>
+               </select>
+            </div>
+            <div class"form-group">
+                <label for="case">case description</label>
+               <textarea type="text" class="form-control" name="case_description_new" row="20" cols="20" 
+               style="margin:10px; padding:30px"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+        <div class"form-group">
+         <label for="consultant">consultant name</label>
+               <input type="text" class="form-control" name="doctor_name" id="consultant"
+               style="margin:10px; padding:30px " placeholder="consultant full name" required>
+            </div>
+          
+            <div class"form-group">
+                <label for"date">Time of visit</label>
+               <input type="time" class="form-control" name="visit_time" 
+               style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+               <input type="tel" class="form-control" name="phone" 
+               style="margin:10px; padding:30px " placeholder="patient contacts" required>
+            </div>
+        </div>
+        <div class="form-group">
+         <center><button type="submit" id="submit" class="btn form-control">Admit Patient</button></center>
+      </div> 
+        </div>
+    </form>
+</div>
+ {%endblock%}
+</body>
+ </html>

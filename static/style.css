@@ -1,0 +1,162 @@
+*{
+    margin: 0%;
+    padding:0%;
+
+}
+body{
+    margin: 0%;
+    padding: auto;
+    overflow-x: hidden;
+}
+header{
+    border: 1px solid black;
+    height: 100px;
+}
+.container{
+background-color:azure ;
+}
+.heading{
+    float: right;
+    margin-top: -2%;
+    max-height: 300px;
+}
+#lining{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 22px auto;
+    width: 500px;
+}
+#other{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+}
+.container .container-xl input[name="date_diagnosed"],
+.container .container-xl input[name="date_verified"],
+.container .container-xl input[name="date_enrolled"],
+.container .container-xl input[name="date_ready"],
+.container .container-xl input[name="date_start"]{
+outline: none;
+border: none;
+border-bottom: 1px solid black;
+margin: 5px;
+}
+
+.container .container-xl input[name="age"],
+.container .container-xl input[name="stage"],
+.container .container-xl input[name="cd4"],
+.container .container-xl input[name="test"],
+.container .container-xl input[name="weight"],
+.container .container-xl input[name="client_category"]{
+width: 50px;
+margin: 5px;
+
+}
+.container .container-xl .h6{
+color: gray;
+}
+.container .container-xl input[name="breast_feeding"],
+.container .container-xl input[name="pregnant"]{
+margin: 10px;
+}
+.container-xxl{
+    max-width: 50%;
+    margin-top: -45%;
+    float: right;
+    margin-right: 10%;
+    position: relative;
+}
+.container-xxl input[name="tb_reg_no"],
+.container-xxl input[name="cbhs_no"]{
+border: none;
+border-bottom: 1px solid black;
+margin: 5px;
+}
+
+.container-xxl .h6{
+color: blue;
+margin: 10px;
+}
+
+.card{
+    margin: 7px;
+    width: max-content;
+    height: min-content;
+}
+.card:hover{
+    transition: 3s ease-in-out;
+    transform: scale(1.08);
+    z-index: 2;
+}
+#attended input{
+max-width:17%;
+padding: 20px;
+display: inline;
+margin: 10px;
+}
+
+#new{
+    float: right;
+}
+
+.row .form-group input[type="text"],
+.row .form-group input[type="number"]{
+margin: 10px;
+padding:20px;
+}
+
+#personal1 input[type="text"],
+#personal1 input[type="number"],
+#personal1 input[type="date"]{
+margin: 10px;
+padding:20px;   
+}
+
+#submit{
+padding: 25px;
+margin: 12px auto;
+max-width: 40% !important;
+background-color:#F5F5DC!important;
+line-height:2em;
+font-size:20px;
+border-radius: 32px;
+font-weight:bold;
+text-transform: capitalize;
+}
+
+#submit:focus{
+background-color:#964f8e;
+color: white;
+
+}
+
+#table_medication tbody tr:hover{
+cursor: pointer;
+}
+#table_medication tbody tr td a{
+    list-style: none;
+    color: darkgray !important;
+}
+
+#search_doc{
+    background-image: url("../media/images/search.png") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.container-fluid .row > a{
+    text-decoration: none;
+}
+
+.container-fluid ~ a{
+    text-decoration: none;
+}
+#btl td a{
+    list-style: none;
+    color:darkgray;
+}
+.disabled{
+    opacity:30%;
+}

@@ -1,0 +1,91 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+        <form action="Test" method="POST">
+          {% csrf_token %}
+          <table class="table table-responsive table-striped" style="margin:20px;padding:10px">
+          <tbody>
+            <tr>
+              <th>TEST NUMBER</th>
+              <th>1</th>
+              
+            </tr>
+
+            <tr>
+              <td><h5>date sample taken</h5></td>
+              <td><input type="date" class="form-control" name="sample_date" style="margin:20px;padding:30px" required></td>
+              
+            </tr>
+
+            <tr>
+              <td><h5>date result return</h5></td>
+              <td><input type="date" class="form-control" name="sample_date_returned" style="margin:20px;padding:20px"required></td>
+              
+            </tr>
+
+            <tr>
+              <td><h5>date result given to client</h5></td>
+              <td><input type="date" class="form-control" name="result_date"style="margin:20px;padding:20px"required></td>
+              
+            </tr>
+
+            <tr>
+              <td><h5>HVL result (copies/ml)</h5></td>
+              <td><input type="number" class="form-control" name="copies" style="margin:20px;padding:20px"required></td>
+              
+            </tr>
+
+            <tr>
+              <td><h5>date initiated EAC***</h5></td>
+              <td><input type="date" class="form-control" name="eac_start_date"style="margin:20px;padding:20px"required></td>
+              
+            </tr>
+
+            <tr>
+              <td><h5>date completed EAC***</h5></td>
+              <td><input type="date" class="form-control" name="eac_end_date" style="margin:20px;padding:20px"required></td>
+              
+            </tr>
+
+            <tr>
+              <td><h5>date  2nd HVL test after EAC***</h5></td>
+              <td><input type="date" class="form-control" name="date_second_test"style="margin:20px;padding:20px"required></td>
+              
+            </tr>
+          </tbody>
+        </table>
+        <div class="form-group">
+            <center><label for="vitals"><h4>vital signs test result</h4></label></center>
+            <input type="text" class="form-control" name="vital_name"style="margin:20px;padding:20px;max-width:30%;display:inline" placeholder=" vital name"required>
+            <label for="date_taken"><h5>date taken</h5></label>
+            <input type="date" class="form-control" name="date_taken"style="margin:20px;padding:20px;max-width:20%;display:inline"required>
+            <label for="rate"><h5> Rate</h5></label>
+            <input type="number" class="form-control" name="rate"style="margin:20px;padding:20px;max-width:30%;display:inline"required>
+        </div>
+        <div class="form-group">
+            <center><button type="submit" id="submit" class="btn form-control">Submit</button></center>
+            </div>
+        </form>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

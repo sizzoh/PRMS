@@ -1,0 +1,145 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content =" text/html"; charset= "UTF-8" />
+    <meta charset="" name="viewport" content="width=device-width, initial-scale=1.0", maximum scale="1"/>
+    <title>index</title>
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h4 class="">CTC2: CLIENT RECORD FORM</h4>
+      <h5 class="heading">NATIONAL HIV CARE AND TREATMENT</h5>
+      <header>
+      known drug allergy:<input type="text" id="lining" name="allergy"/>
+    </header>
+    <h5>PRIOR ARV EXPOSURE (tick appropriate)</h5>
+    <div class="container-xl">
+      <input type="checkbox" name="none">NONE<br>
+      <input type="checkbox" name="PEP">PEP<br>
+      <input type="checkbox" name="Hepatitis_B_Rx">Hepatitis B Rx<br>
+      <input type="checkbox" name="HEI_Prophylaxis">HEI Prophylaxis<br>
+      <input type="checkbox" name="PMTCT_Prophylaxis">PMTCT Prophylaxis<br>
+      <input type="checkbox" name="PrEP">PrEP<br>
+      <input type="checkbox" name="Other">Other (specify) <input type="text" name="other" id="other"/>
+      <br>
+      <br>
+      DATE DIAGNOSED HIV+ <input type="text" name="date_diagnosed" pattern="\\d{1,2}/\\d{1,2}/\\d{4}" placeholder="__/__/____"/><br>
+      DATE RETESTED FOR VERIFICATION <input type="text" name="date_verified" pattern="\\d{1,2}/\\d{1,2}/\\d{4}" placeholder="__/__/____"/><br>
+      DATE ENROLLED IN CARE <input type="text" name="date_enrolled" pattern="\\d{1,2}/\\d{1,2}/\\d{4}" placeholder="__/__/____"/><br>
+      DATE READY TO START ART <input type="text" name="date_ready" pattern="\\d{1,2}/\\d{1,2}/\\d{4}" placeholder="__/__/____"/><br>
+      DATE START ART <input type="text" name="date_start" pattern="\\d{1,2}/\\d{1,2}/\\d{4}" placeholder="__/__/____"/><br>
+
+      <br>
+      <h4 class="h6">STATUS AT START ART</h4>
+     AGE<input type="text" name="age">
+     WHO STAGE 1-4<input type="text" name="stage"><br>
+     CD4 COUNT/%<input type="text" name="cd4">
+     Serum CrAg TEST (P/N)<input type="text" name="test"><br>
+     BODY WEIGHT <input type="text" name="weight">
+     CLIENT CATEGORY <input type="text" name="client_category">
+     <br>
+     <h6 class="h6">Tick if</h6>
+     BREAST FEEDING <input type="checkbox" name="breast_feeding">
+     PREGNANT <input type="checkbox" name="pregnant">
+    </div>  
+    
+      <div class="container-xxl">
+        TB REGISTRATION NO <input type="number" name="tb_reg_no"/><br>
+        CBHS NUMBER <input type="number" name="cbhs_no"/>
+
+        <br>
+        <h5 class="h6">HIV VIRAL LOAD TESTING</h5>
+        <table class="table table-responsive table-striped" border="1">
+          <tbody>
+            <tr>
+              <th>TEST NUMBER</th>
+              <th>1</th>
+              <th>1</th>
+              <th>1</th>
+              <th>1</th>
+              <th>1</th>
+              
+            </tr>
+
+            <tr>
+              <td>date sample taken</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+
+            <tr>
+              <td>date result return</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+
+            <tr>
+              <td>date result given to client</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+
+            <tr>
+              <td>HVL result (copies/ml)</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+
+            <tr>
+              <td>date initiated EAC***</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+
+            <tr>
+              <td>date completed EAC***</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+
+            <tr>
+              <td>date  2nd HVL test after EAC***</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <a href="home.html" target="_top">home</a>
+    </div>
+  </body>
+</html>

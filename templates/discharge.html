@@ -1,0 +1,96 @@
+ {%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf_token" content="{{csrf_token}}" />
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+    
+   <!--<script src="{% static 'chart.min.js' %}"></script>-->
+   <script src="{% static 'scripts.js'%}"></script>
+   <script src="{% static 'jquery.min.js'%}"></script>
+    
+    </head>
+    <body>
+    {%block content%}
+    <div class="container-l overflow-hidden">
+        <div class="mt-lg-4">
+        <div class="container-l">
+        <center><div><h5> Discharge patient</h5></div></center>
+        <form>
+            <div class="row">
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="patient_number" id="number" placeholder="patient number"></div>
+        <div class="col-md-6"><input type="text" class="form-control mb-3 p-4" name="patient_name" id="name" placeholder="patient name"></div>
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="phone" id="phone" placeholder="phone number"></div>
+            </div>
+        </form>      
+            <div class="table-responsive">
+           <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patient number</th>
+                    <th scope="col">name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">weight (kg)</th>
+                    <th scope="col">day admitted</th>
+                    <th scope="col">last vist date</th>
+                    <th scope="col">case for attendence</th>
+                    <th scope="col">consultant name</th>
+                    <th scope="col">case description</th>
+                    <th scope="col">treatment start date</th>
+                    <th scope="col">treatment end date</th>
+                    <th scope="col">new visit date</th>
+                    <th scope="col">curent case</th>
+                    <th scope="col">current case description</th>
+                    <th scope="col">consultant name (kg)</th>
+                    <th scope="col">Visiting Time</th>
+                    <th scope="col">patient contacts</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in admit%}
+                <tr>
+                     <td>{{i.id}}</td>
+                    <td>{{i.file_number}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.dof}}</td>
+                    <td>{{i.weight}}</td>
+                    <td>{{i.day}}</td>
+                    <td>{{i.date}}</td>
+                    <td>{{i.case_description}}</td>
+                    <td>{{i.full_name_new}}</td>
+                    <td>{{i.description_new}}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.end_date}}</td>
+                    <td>{{i.visit_date}}</td>
+                    <td>{{i.visit_case}}</td>
+                    <td>{{i.case_description_new}}</td>
+                    <td>{{i.doctor_name}}</td>
+                    <td>{{i.visit_time}}</td>
+                    <td>{{i.phone}}</td>
+                       <td>
+                   <a href="{%url 'discharge_patient' i.id%}"><button type="button" class="btn btn-success p-2 btn-xs"><i class="fa fa-pencil">Discharge</i></button></a>   
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+           </table>
+        </div>
+         {% comment %}end of admitted  {% endcomment %}
+    </div> 
+   </div>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

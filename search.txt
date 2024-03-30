@@ -1,0 +1,62 @@
+from django.http import JsonResponse
+from .models import YourModel
+
+def search_view(request):
+    query = request.GET.get('query', '')
+    results = YourModel.objects.filter(name__icontains=query)
+    data = [{'id': obj.id, 'name': obj.name} for obj in results]
+    return JsonResponse({'results': data})
+
+
+//
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Search</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <table id="searchResults">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var query = $(this).val();
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '/search/',
+                        data: {query: query},
+                        success: function(response) {
+                            var results = response.results;
+                            $('#searchResults tbody').empty();
+                            if (results.length > 0) {
+                                $.each(results, function(index, result) {
+                                    var row = $('<tr>');
+                                    row.append($('<td>').text(result.id));
+                                    row.append($('<td>').text(result.name));
+                                    $('#searchResults tbody').append(row);
+                                });
+                            } else {
+                                $('#searchResults tbody').append('<tr><td colspan="2">No results found</td></tr>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#searchResults tbody').empty();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
