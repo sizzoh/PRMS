@@ -6,6 +6,10 @@
     "divs",
     "eqwv",
     "nhci",
-    "uuczhp"
+    "urllib",
+    "uuczhp",
+    "virtualenv",
+    "virtualenvwrapper",
+    "whitenoise"
   ]
 }
