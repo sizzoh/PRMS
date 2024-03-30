@@ -1,0 +1,63 @@
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" maximum scale="1" />
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+    </head>
+    <body>
+    {%block content%}
+    <div class="container-l">
+        <input type="date" class="form-control" name="date">
+        <input type="number" class="form-control" name="patient_number" placeholder="patient number">
+        <input type="text" class="form-control" name="patient_name" placeholder="patient name">
+        <input type="number" class="form-control" name="phone" placeholder="phone number">
+        <input type="email" class="form-control" name="email" placeholder="patient email">
+        <form class="form">
+           <table class="table table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patient number</th>
+                    <th scope="col">name</th>
+                    <th scope="col">age</th>
+                    <th scope="col">gender</th>
+                    <th scope="col">marital status</th>
+                    <th scope="col">address</th>
+                    <th scope="col">contacts</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">weight (kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                </tr>
+            </tbody>
+           </table>
+        </form>
+        {%include 'extra_details.html'%}
+    </div>
+    {%endblock%}
+    </body>
+    </html>

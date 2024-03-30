@@ -1,0 +1,145 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+         <form action="customer" method="POST" id="register">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            <h5>Personal Details</h5>
+            <div class"form-group">
+               <input type="number" class="form-control" name="card_number" 
+               style="margin:10px; padding:30px " placeholder="card number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="reg_name" 
+               style="margin:10px; padding:30px " placeholder="facility registered name" required onclick="query();">
+               <span class="text-muted">make sure this name match with username</span>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="id_number" 
+               style="margin:10px; padding:30px " placeholder="unique ID number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="full_name" 
+               style="margin:10px; padding:30px " placeholder="full name" required>
+            </div>
+            <div class"form-group">
+               <label for="date"><p class="text-muted">Date Of Birth</p></label>
+               <input type="date" name="dof" class="form-control" style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="age" 
+               style="margin:10px; padding:30px " placeholder="age" required>
+            </div>
+            
+            <div class"form-group">
+               <input type="number" class="form-control" name="weight" placeholder=" weight (kg)" style="margin:10px; padding:30px " required>
+            </div>
+            </div>
+
+            <div class="col-md-6" id="more">
+            <h5>More Details</h5>
+            <div class"form-group">
+               <input type="number" class="form-control" name="file_number" 
+               style="margin:10px; padding:30px " placeholder="patient file number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="role" 
+               style="margin:10px; padding:30px " value="customer" required>
+            </div>
+            <div class"form-group">
+               <select class="form-control" name="marital_status" style="margin:10px; padding:30px " required>
+                  <option>marital status</option>
+                 <option value="married">married</option>
+                 <option value="single">single</option>
+                 <option value="other">other</option>
+                  </select>
+            </div>
+
+            <div class"form-group">
+               <select class="form-control" name="sex" style="margin:10px; padding:30px " required>
+                  <option>sex</option>
+                 <option value="male">male</option>
+                 <option value="female">female</option>
+                  </select>
+            </div>
+            <div class"form-group">
+               <p class="text-muted">reception date</p>
+               <input type="date" class="form-control" name="date_created" style="margin:10px; padding:30px " placeholder="reception date">
+            </div>
+      
+            <div class"form-group">
+               <input type="number" class="form-control" name="height" placeholder=" height  (cm/inches) " style="margin:10px; padding:30px " required>
+            </div>  
+            <div class"form-group">
+               <select type="text" class="form-control" name="day" style="margin:10px; padding:30px " required>
+                  <option value="">visit day: choose one</option>
+                  <option value="monday">monday</option>
+                  <option value="tuesday">tuesday</option>
+                  <option value="wednesday">wednesday</option>
+                  <option value="thursday">thursday</option>
+                  <option value="friday">friday</option>
+                  <option value="suturday">suturday</option>
+                  <option value="sunday">sunday</option>
+               </select>
+            </div>        
+            </div>      
+         
+            <div class="col-md-6" id="client_address">
+            <h5>client address</h5>
+            <div class"form-group">
+               <input type="text" class="form-control" name="ward"
+               style="margin:10px; padding:30px " placeholder="councel/division/ward">
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="street"
+               style="margin:10px; padding:30px " placeholder="street">
+            </div>
+            <div class"form-group">
+               <input type="text" name="street_chairman" class="form-control" 
+               style="margin:10px; padding:30px " placeholder="village chairman">
+            </div>
+            </div>
+
+            <div class="col-md-6">
+            <div class"form-group">
+               <input type="text" class="form-control" name="ten_cell_leader" 
+               style="margin:10px; padding:30px " placeholder="name of ten cell leader">
+            </div>
+            <div class"form-group">  
+              <input type="number" class="form-control" name="street_chair_man_contact" 
+              style="margin:10px; padding:30px " placeholder="contact of household head" minlength="10" maxlength="10">
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="client_contact" 
+               style="margin:10px; padding:30px " placeholder="client contact number" required>
+            </div>
+            </div>
+         </div>
+         <div class="form-group">
+         <center><button type="submit" id="submit" class="btn form-control">Submit</button></center>
+        </div>     
+   </form>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

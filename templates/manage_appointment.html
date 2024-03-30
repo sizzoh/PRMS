@@ -1,0 +1,81 @@
+ {%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" maximum scale="1" />
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+    </head>
+    <body>
+    {%block content%}
+    <div class="container-l">
+        <div class="form-group">
+        </div>
+         <form class="form">
+       <center><h4>Manage Appointments</h4></center>
+       <div class="table-responsive">
+           <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patient number</th>
+                    <th scope="col">name</th>
+                    <th scope="col">age</th>
+                    <th scope="col">gender</th>
+                    <th scope="col">marital status</th>
+                    <th scope="col">address</th>
+                    <th scope="col">contacts</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">appointment type</th>
+                    <th scope="col">consultant name</th>
+                    <th scope="col">consultant contacts</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">start time</th>
+                    <th scope="col">end time</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {%for app in book%}
+                    <td>{{app.id}}</td>
+                    <td>{{app.patient_number}}</td>
+                    <td>{{app.name}}</td>
+                    <td>{{app.age}}</td>
+                    <td>{{app.gender}}</td>
+                    <td>{{app.marital}}</td>
+                    <td>{{app.address}}</td>
+                    <td>{{app.phone}}</td>
+                    <td>{{app.dof}}</td>
+                    <td>{{app.category}}</td>
+                    <td>{{app.consultant_name}}</td>
+                    <td>{{app.consultant_contacts}}</td>
+                    <td>{{app.date}}</td>
+                    <td>{{app.start_date}}</td>
+                    <td>{{app.end_date}}</td>
+                    <td>
+             <a href="#" class="btn btn-success" onclick="appointment_manage()" id="accept">Accept<i class="fa fa-pencil"></i></a>
+              <a href="#" class="btn btn-danger" style="margin-right: 10px" id="reject">Reject<i class="fa fa-trash-can"></i></a>
+                 
+                    </td>
+                    {%endfor%}
+                </tr>
+            </tbody>
+           </table>
+           </div>
+        </form>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

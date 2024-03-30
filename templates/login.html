@@ -1,0 +1,92 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Login</title>
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <!--<link rel="stylesheet" href="{%static 'all.css'%}" type="text/css-->
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <scrip type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+
+  <link href="{%static 'admin/css/adminlte.css'%}" rel="stylesheet">
+  <link href="{%static 'admin/css/adminlte.css.map'%}" rel="stylesheet">
+  <link href="{%static 'admin/css/adminlte.min.css'%}" rel="stylesheet">
+  <!-- Google Font: Source Sans Pro -->
+{% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> {% endcomment %}
+</head>
+<body class="hold-transition login-page" onload="loginAuthenticate();">
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg"><b>Patient Records Management System (PRMS)</b></p>
+      <p class="login-box-msg"><b>Sign in to start your session</b></p>
+     {% for message in messages%}
+        <div class="alert alert-{{message.tags}}">{{message}}
+          <button class="close" data-dismiss="alert" aria-label="close">&times;</button>
+        </div>
+            {% endfor %}
+      <form action="login" method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="username" id="username" onclick="loginAuthenticate();" placeholder=" username or Email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" name="password" id="pass" oninput="loginAuthenticate();" placeholder="Password"required><br>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock-open"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+        <label for="show_password">Show Password</label>
+         <input type="checkbox" id="show" style="margin:10px" onclick="show_password();">
+        </div>
+        <div></div><br>
+          <center>
+          <div class="col-8">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </div>
+          </center>
+        </div>
+      </form>
+      <p class="mb-3 text-center">
+        <a href="#">I forgot my password</a>
+      </p>
+      <p class="mb-3 text-center">
+        <a href="{%url 'register'%}" class="text-center">Register a new membership</a>
+      </p>
+    </div>
+  </div>
+  <script>
+    function show_password(){
+    
+   var element= document.getElementById('pass');
+  if(element.type==='password'){
+    element.type ='text';
+  }
+  else{
+    element.type = 'password';
+  }
+}
+  </script>
+</div>
+</body>
+</html>

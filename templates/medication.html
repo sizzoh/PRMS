@@ -1,0 +1,147 @@
+ {%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf_token" content="{{csrf_token}}" />
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+    
+   <!--<script src="{% static 'chart.min.js' %}"></script>-->
+   <script src="{% static 'scripts.js'%}"></script>
+   <script src="{% static 'jquery.min.js'%}"></script>
+    
+    </head>
+    <body>
+    {%block content%}
+    <div class="container-l overflow-hidden">
+        <a href="{%url 'prescriptions'%}"><button class="btn btn-primary bg-success" type"button" id="new" onclick="">new prescriptions<i class="fa fa-plus"></i></button></a>
+        <div class="row">
+        <div class="col-md-6"><input type="date" class="form-control mb-3 p-4" name="date" id="visit_date" onclick="searchData()"></div>
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="patient_number" id="patient_number" onkeypress="searchData()" placeholder="patient number"></div>
+        <div class="col-md-6"><input type="text" class="form-control mb-3 p-4" name="patient_number" id="patient_name" onkeypress="searchData()" placeholder="patient name"></div>
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="patient_number" id="patient_phone" onkeypress="searchData()" placeholder="phone number">
+        <button type="button" class="btn btn-secondary p-3 float-end" id="discharge">Admitted Patients</button></div>
+        </div>
+         <form class="form">
+            <div class="table-responsive">
+           <table class="table table-striped" id="table_data">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patien tnumber</th>
+                    <th scope="col">name</th>
+                    <th scope="col">age</th>
+                    <th scope="col">gender</th>
+                    <th scope="col">marital status</th>
+                    <th scope="col">address</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">contacts</th>
+                    <th scope="col">weight (kg)</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in attended%}
+                <tr id="btl" onclick="admit();">
+                    <td>{{i.id}}</td>
+                    <td>{{i.file_number}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.sex}}</td>
+                    <td>{{i.marital_status}}</td>
+                    <td>{{i.street}}</td>
+                    <td>{{i.dof}}</td>
+                    <td>{{i.client_contact}}</td>
+                    <td>{{i.weight}}</td>
+                    <td>
+                    <a href="{% url 'existing_prescriptions' i.file_number%}"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil">Priscribe</i></button></a>   
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+           </table>
+        </div>
+        </form> 
+        {% comment %} start of admitted {% endcomment %}
+        <br>
+        <br>
+        <div id="admitted" class="mt-lg-4">
+        <div class="container-l">
+        <center><div><h5> Discharge patient</h5></div></center>
+        <form>
+            <div class="row">
+        <div class="col-md-6"><input type="number" class="form-control p-4 mb-3" name="patient_number" id="number" placeholder="patient number"></div>
+        <div class="col-md-6"><input type="text" class="form-control p-4 mb-3" name="patient_name" id="name" placeholder="patient name"></div>
+        <div class="col-md-6"><input type="number" class="form-control p-4 mb-3" name="phone" id="phone" placeholder="phone number"></div>
+            </div>
+        </form>      
+         <form class="form">
+            <div class="table-responsive">
+           <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patient number</th>
+                    <th scope="col">name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">weight (kg)</th>
+                    <th scope="col">last vist date</th>
+                    <th scope="col">case for attendence</th>
+                    <th scope="col">consultant name</th>
+                    <th scope="col">case description</th>
+                    <th scope="col">treatment start date</th>
+                    <th scope="col">treatment end date</th>
+                    <th scope="col">new visit date</th>
+                    <th scope="col">curent case</th>
+                    <th scope="col">current case description</th>
+                    <th scope="col">consultant name (kg)</th>
+                    <th scope="col">Visiting Time</th>
+                    <th scope="col">patient contacts</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in admitted%}
+                <tr>
+                     <td>{{i.id}}</td>
+                    <td>{{i.file_number}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.dof}}</td>
+                    <td>{{i.weight}}</td>
+                    <td>{{i.date}}</td>
+                    <td>{{i.case_description}}</td>
+                    <td>{{i.full_name_new}}</td>
+                    <td>{{i.description_new}}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.end_date}}</td>
+                    <td>{{i.visit_date}}</td>
+                    <td>{{i.visit_case}}</td>
+                    <td>{{i.case_description_new}}</td>
+                    <td>{{i.doctor_name}}</td>
+                    <td>{{i.visit_time}}</td>
+                    <td>{{i.phone}}</td>
+                       <td>
+            <a href=""><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil">Discharge</i></button></a>   
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+           </table>
+        </div>
+        </form>
+         {% comment %}end of admitted  {% endcomment %}
+    </div> 
+   </div>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

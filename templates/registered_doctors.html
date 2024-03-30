@@ -1,0 +1,140 @@
+ {%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+    <!--<link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">-->
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script  src="{%static 'scripts.js'%}"></script>
+    <!--<script  src="{%static 'chart.min.js'%}"></script>-->
+    <script  src="{%static 'jquery.min.js'%}"></script>
+    <script></script>
+    </head>
+    <body onload="query()">
+    {%block content%}
+    <div class="container-l" id="attended">
+        <div class="form-group">
+        <a href="{%url 'doctor'%}"><button class="btn btn-primary bg-success" type"button" id="new">New Doctor<i class="fa fa-plus"></i></button></a>
+        </div>
+        <input type="text" class="form-control" name="name" id="doc_name" placeholder="General search" oninput="doctor1();">
+        <input type="number" class="form-control" name="name" id="doc_phone" placeholder=" search by phone number" oninput="doctor2();">
+        <input type="email" class="form-control" name="name" id="doc_email" placeholder="search by email" oninput="doctor3();">
+        <a href="#"><button type="button" class="btn btn-secondary" id="patient_manage">Manage Patients</button></a>
+         <form class="form">
+            <div class="table-responsive">
+           <table class="table table-striped">
+            <thead>
+                <tr> 
+                    <th scope="col">name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">age</th>
+                    <th scope="col">gender</th>
+                    <th scope="col">marital status</th>
+                    <th scope="col">address</th>
+                    <th scope="col">contacts</th>
+                    <th scope="col">specialty</th>
+                    <th scope="col">Doctor's experience</th>
+                    <th scope="col">Action</th>
+                        
+                </tr>
+            </thead>
+            <tbody>
+               {%for i in doc%}
+                <tr>
+                    <td>{{i.name}}</td>
+                    <td>{{i.email}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.gender}}</td>
+                    <td>{{i.marital}}</td>
+                    <td>{{i.address}}</td>
+                    <td>{{i.phone}}</td>
+                    <td>{{i.specialty}}</td>
+                    <td>{{i.experience}}</td>
+                    <td>
+            <a href="{%url 'edit_staff' i.id%}"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil">Edit</i></button></a>   
+            <a href="{%url 'delete_staff' i.id%}"><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-can">Delete</i></button></a>   
+                    </td>
+                    
+                </tr>
+               {%endfor%}
+            </tbody>
+           </table>
+           </div>
+           <br>
+        </hr>
+        <br>
+        <br>
+        </form>
+        <!--start of patient page -->
+        <div id="includes">
+        <div class="container-l">
+        <center><div><h5>Admin manage patients</h5></div></center>
+        <div class="form-group">
+           <a href="{%url 'customer'%}"><button class="btn btn-primary bg-success" type"button" id="new" onclick="medication()">new patient<i class="fa fa-plus"></i></button></a>
+        </div>
+        <form>
+            <div class="row">
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="patient_number" id="number" placeholder="patient number"></div>
+        <div class="col-md-6"><input type="text" class="form-control mb-3 p-4" name="patient_name" id="name" placeholder="patient name"></div>
+        <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="phone" id="phone" placeholder="phone number"></div>
+            </div>
+        </form>      
+         <form class="form">
+            <div class="table-responsive">
+           <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">patient number</th>
+                    <th scope="col">name</th>
+                    <th scope="col">age</th>
+                    <th scope="col">gender</th>
+                    <th scope="col">marital status</th>
+                    <th scope="col">address</th>
+                    <th scope="col">contacts</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">weight (kg)</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in customer%}
+                <tr>
+                     <td>{{i.id}}</td>
+                    <td>{{i.file_number}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.sex}}</td>
+                    <td>{{i.marital_status}}</td>
+                    <td>{{i.street}}</td>
+                    <td>{{i.client_contact}}</td>
+                    <td>{{i.dof}}</td>
+                    <td>{{i.weight}}</td>
+                       <td>
+            <a href="{%url 'edit_patient' i.id%}"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil">Edit</i></button></a>   
+            <a href="{%url 'delete_patient' i.id%}"><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-can">Delete</i></button></a>   
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+           </table>
+        </div>
+        </form>
+       
+    </div> 
+   </div>
+   <!-- end of patient page-->
+    </div>
+    {%endblock%}
+    </body>
+    </html>

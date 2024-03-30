@@ -1,0 +1,123 @@
+{%extends "base.html" %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0", maximum scale="1"/>
+    <title>home</title>
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <!--<link rel="stylesheet" href="{%static 'all.css'%}" type="text/css-->
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+  </head>
+  <body>
+    {%block content%}
+    <div class="container-fluid overflow-hidden">
+         <form action-="Book_appointment" method="POST">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            <h6>appointment info please fill all required fields</h6>
+            <div class"form-group">
+               <input type="number" class="form-control" name="patient_number" 
+               style="margin:10px; padding:30px " placeholder="patient number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="name" 
+               style="margin:10px; padding:30px " placeholder="patient name" required>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="age" 
+               style="margin:10px; padding:30px " placeholder="your age" required>
+            </div>
+
+            <div class"form-group">
+                <label for="age">select your Gender</label>
+               <select class="form-control" name="gender" style="margin:10px; padding:30px " placeholder="your age" required>
+                <option value="">---</option> 
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+               </select>
+            </div>
+               
+            <div class"form-group"> 
+               <label for="date">appointment Date</label> 
+              <input type="date" class="form-control" name="date" 
+              style="margin:10px; padding:30px">
+            </div>
+            <div class"form-group">
+                <label for="appointment">appointment Type</label>
+               <select type="text" class="form-control" name="category"
+               style="margin:10px; padding:30px " placeholder="street" required>
+               <option value="">--</option>
+               <option value="HIV test">HIV TEST</option>
+               <option value="presure test">BLOOD PRESURE TEST</option>
+               <option value="sugar test">Sugar TEST</option>
+               <option value="counceling">counceling</option>
+
+            </select>
+            </div>
+            </div>
+
+            <div class="col-md-6" id="more">
+            <h5>More Details</h5>
+            <div class"form-group">
+               <select type="number" class="form-control" name="marital" 
+               style="margin:10px; padding:30px " placeholder="patient file number" required>
+               <option>choose one</option>
+               <option value="single">single</option>
+               <option value="married">married</option>
+               <option value="other">prefer not to say</option>
+            </select>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="address" 
+               style="margin:10px; padding:30px " placeholder=" your address">
+            </div>    
+               <div class"form-group">
+               <input type="number" class="form-control" name="phone" style="margin:10px; padding:30px " placeholder=" your phone number">
+            </div>  
+
+            <div class"form-group">
+               <label for="time"><b>Start Time</b></label>
+               <input type="time" class="form-control" name="start_time"  
+               style="margin:10px; padding:30px;display:inline "required>
+            </div>
+            <div class"form-group">
+               <label for="time"><b>End Time</b></label>
+               <input type="time" class="form-control" name="end_time"  
+               style="margin:10px; padding:30px;display:inline " required>
+            </div>
+            <div class"form-group">
+               <input type="text" name="consultant_name" class="form-control" 
+               style="margin:10px; padding:30px " placeholder="consultant name ">
+            </div>
+
+            <div class"form-group">
+               <input type="number" class="form-control" name="consultant_contacts" 
+               style="margin:10px; padding:30px;display:inline " placeholder="consultant contacts">
+            </div>
+         </div>
+            <div class="col-md-3">
+            
+            
+            </div>
+         </div>
+      <div class="form-group">
+         <center><button type="submit" id="submit" class="btn form-control">Submit</button></center>
+      </div>     
+         </form>
+    </div>
+
+    {%endblock%}
+  </body>
+  </html>

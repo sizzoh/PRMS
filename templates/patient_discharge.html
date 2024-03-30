@@ -1,0 +1,117 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'jquery.signature.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'jquery.signature.js'%}"></script>
+    <script type="text/javascript" src="{%static 'jquery.signature.min.js'%}"></script>
+   </head>
+    <body onload="signature()">
+    {%block content%}
+    <div class="container-fluid">
+        <div class="header" style="padding:30px; text-align:center;background-color:#F8F8F8"><h5>Patient medication details</h5></div>
+         <form action="admission" method="POST">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            {%for i in data%}
+            <div class"form-group">
+               <input type="number" class="form-control" name="file_number" value="{{i.file_number}}" id="card_number" 
+               style="margin:10px; padding:30px " placeholder="file number" required>
+            </div>
+            <div class"form-group">
+               <input type="text" class="form-control" name="name" value="{{i.name}}" id="p_name"
+               style="margin:10px; padding:30px " placeholder="full name" required>
+            </div>
+
+            <div class"form-group">
+                <label for="day">day of admission</label>
+               <input type="text" class="form-control" name="day" value="{{i.day}}" id="p_name"
+               style="margin:10px; padding:30px " placeholder="full name" required>
+            </div>
+            
+             <div class"form-group">
+                <label for"date">Date Admitted</label>
+               <input type="text" class="form-control" name="date" value="{{i.date}}" id="date" 
+               style="margin:10px; padding:30px " required>
+            </div>
+
+             <div class"form-group">
+                <label for="case">case description</label>
+               <input type="text" class="form-control" name="case_description" row="20" cols="20" 
+               value="{{i.case_description}}" id="case_description"
+               style="margin:10px; padding:30px"></input>
+            </div>
+
+             <div class"form-group">
+               <input type="text" class="form-control" name="full_name" value="{{i.full_name_new}}" id="full_name"
+               style="margin:10px; padding:30px " placeholder="consultant full name" required>
+            </div>
+        </div>
+        
+            <div class="col-md-6" id="personal2">
+             <div class"form-group">
+               <select type="text" class="form-control" name="day_discharge" style="margin:10px; padding:30px " required>
+                  <option value="">Day of Discharge: choose one</option>
+                  <option value="monday">monday</option>
+                  <option value="tuesday">tuesday</option>
+                  <option value="wednesday">wednesday</option>
+                  <option value="thursday">thursday</option>
+                  <option value="friday">friday</option>
+                  <option value="suturday">suturday</option>
+                  <option value="sunday">sunday</option>
+               </select>
+            </div>  
+             <div class"form-group">
+                <label for"date">Discharge date</label>
+               <input type="date" class="form-control" name="date_discharge" id="d_d" 
+                style="margin:10px; padding:30px" required>
+            </div>
+            <div class"form-group">
+                <label for"date">patient phone number</label>
+               <input type="tel" class="form-control" name="phone" id="phone" 
+               value="{{i.phone}}" style="margin:10px; padding:30px" required>
+            </div>
+
+             <div class"form-group">
+               <input type="text" class="form-control" name="condition" id="condition"
+               style="margin:10px; padding:30px " placeholder="patient condition" required>
+            </div>
+
+            <label>patient signature</label>
+             <div class="container" id="signatureContainer">
+              
+            </div>
+            <textarea id="signature" name="signature" style="margin:10px; display:none"></textarea>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="form-group mb-4">
+            <a class="btn btn-warning opacity-75 fs-4 m-4 p-3" id="clear" type="clear">Clear</a>
+            <button type="button" class="btn btn-default text-bg-info opacity-75 fs-4 p-3" id="save" onclick="signature()">save</button>
+            </div>
+            {%endfor%}
+        </div>
+        <div class="form-group">
+         <center><button type="submit" id="submit" class="btn btn-block">confirm</button></center>
+        </div>  
+    </form>
+</div>
+ {%endblock%}
+</body>
+ </html>

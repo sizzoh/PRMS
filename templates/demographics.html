@@ -1,0 +1,137 @@
+{%extends 'base.html'%}
+{%load  static  %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="" name="viewport" content="width=device-width, initial-scale=1.0", maximum scale="1"/>
+    <title>demographic</title>
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+
+  </head>
+  <body>
+    {%block content%}
+    <div class="container-fluid justify-content-center overflow-hidden">
+      <form class="form">
+        <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">date of birth</th>
+              <th scope="col">gender</th>
+              <th scope="col ">contacts</th>
+              <th scope="col">email</th>
+              <th scope="col">address</th>
+            </tr>
+          </thead>
+           <tbody>
+            <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            </tr>
+           </tbody>
+        </table>
+      </div>
+      </form>
+      <br>
+      
+      <aside>
+        <h4>hospital related details</h4>
+
+        <form class="form">
+          <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+            <th scope="col">Patient file number</th>
+              <th scope="col">ctc 2 card No</th>
+              <th scope="col">facility registered name</th>
+              <th scope="col">unique ctc id no</th>
+              <th scope="col ">client full name</th>
+              <th scope="col">DOB</th>
+              <th scope="col">age</th>
+              <th scope="col">height (cm)</th>
+              <th scope="col">gender</th>
+              <th scope="col">marital status</th>
+              <th scope="col">finger print consent</th>
+            </tr>
+          </thead>
+           <tbody>
+            <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+    
+            </tr>
+           </tbody>
+        </table>
+      </div>
+      </form>
+      </aside>
+      <br>
+      <aside>
+        <h4>patient address details</h4>
+
+        <form class="form">
+          <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+            <th scope="col">council/ward</th>
+              <th scope="col">street/village</th>
+              <th scope="col">street village chairperson</th>
+              <th scope="col">name of ten cell leader</th>
+              <th scope="col ">name of household head</th>
+              <th scope="col">phone </th>
+              <th scope="col">client phone no</th>
+              <th scope="col">height (cm)</th>
+              <th scope="col">sms consent</th>
+        
+            </tr>
+          </thead>
+           <tbody>
+            <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            
+            </tr>
+           </tbody>
+        </table>
+      </div>
+      </form>
+      </aside>
+      {% include "patient_records.html" %}
+    </div>
+    {%endblock%}
+  </body>
+</html>
