@@ -1,0 +1,72 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+       {% for message in messages%}
+        <div class="alert alert-{{message.tags}}">{{message}}
+          <button class="close" data-dismiss="alert" aria-label="close">&times;</button>
+        </div>
+            {% endfor %}
+        <div class="header" style="padding:30px; text-align:center;background-color:#F8F8F8"><h3 class="text-capitalize">feedback body</h3></div>
+         <form action="feedback" method="POST">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            <div class"form-group">
+               <input type="number" class="form-control" name="username"
+               style="margin:10px; padding:30px " placeholder="sender's username" required>
+            </div>
+            <div class"form-group">
+               <input type="email" class="form-control" name="email" 
+               style="margin:10px; padding:30px " placeholder="sender's email" required>
+            </div>
+            <div class"form-group">
+               <input type="number" class="form-control" name="subject"
+               style="margin:10px; padding:30px " placeholder="subject" required>
+            </div>
+        </div>
+        
+            <div class="col-md-6" id="personal2">
+            <div class"form-group">
+                <label for"date">Date</label>
+               <input type="date" class="form-control" name="date"
+               style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+                <label for="case">message</label>
+               <textarea type="text" class="form-control" name="message" row="20" cols="20" 
+               style="margin:10px; padding:30px"></textarea>
+            </div>
+            <div class"form-group">
+               <input type="tel" class="form-control" name="phone"
+               style="margin:10px; padding:30px " placeholder="your contacts" required>
+            </div>
+            
+        </div>
+        <div class="form-group">
+         <center><button type="submit" id="submit" class="btn form-control text-capitalize">send feedback</button></center>
+      </div> 
+        </div>
+    </form>
+</div>
+ {%endblock%}
+</body>
+ </html>

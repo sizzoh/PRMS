@@ -38,4 +38,5 @@ urlpatterns = [
     path('discharge_patient<int:pk>', views.discharge_patient, name='discharge_patient'),
     path('trends', views.trends, name='trends'),
     path('patient', views.patient, name='patient'),
+    path('feedback', views.feedback, name='feedback'),
 ]

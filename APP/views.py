@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import customers, Lab_result, Appointment, Medication, Staff, Status, Admission
+from .models import customers, Lab_result, Appointment, Medication, Staff, Status, Admission,feedback
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
@@ -579,7 +579,22 @@ def patient(request):
         context ={
             'data':json_data,
         }
-        return JsonResponse(context, safe=False) 
+        return JsonResponse(context, safe=False)
+    
+def feedback(request):
+    if request.method == 'POST':
+        name = request.POST['username']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        date = request.POST['date']
+        message = request.POST['message']
+        phone = request.POST['phone']
+        
+        rec = feedback(name=name, email=email, subject=subject,
+                       date=date, message=message, contacts=phone)
+        if rec:
+            messages.info(request, 'your feedback has been successfully submitted')
+    return render(request, 'feedback.html')     
      
 '''need to use custom model class for role authentication'''
 '''from django.contrib.auth.models import AbstractUser

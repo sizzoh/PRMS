@@ -117,5 +117,12 @@ class Admission(models.Model):
      visit_time = models.TimeField(null=True)
      phone = models.IntegerField()
      
-     
+class feedback(models.Model):
+     name = models.CharField(max_length=200)
+     email = models.EmailField(max_length=100)
+     subject = models.CharField(max_length=100)
+     date = models.DateField(auto_now_add=True)
+     message = models.TextField(max_length=300)
+     contacts = models.IntegerField()
+          
      
