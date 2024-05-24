@@ -14,7 +14,7 @@
     <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
 
     <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
-    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'sweetalert2.min.js'%}"></script>
     <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
    </head>
     <body>
@@ -23,12 +23,12 @@
          <form action="customer" method="POST" id="register">
             {%csrf_token%}
             <div class="row">
-            <div class="col-md-6" id="personal1">
+               <div class="col-md-6" id="personal1">
+                  {% for message in messages%}
+                 <div class="alert alert-{{message.tags}} text-center">{{message}}
+                  </div>
+                  {% endfor %}
             <h5>Personal Details</h5>
-            <div class"form-group">
-               <input type="number" class="form-control" name="card_number" 
-               style="margin:10px; padding:30px " placeholder="card number" required>
-            </div>
             <div class"form-group">
                <input type="text" class="form-control" name="reg_name" 
                style="margin:10px; padding:30px " placeholder="facility registered name" required onclick="query();">
@@ -44,11 +44,11 @@
             </div>
             <div class"form-group">
                <label for="date"><p class="text-muted">Date Of Birth</p></label>
-               <input type="date" name="dof" class="form-control" style="margin:10px; padding:30px " required>
+               <input type="date" name="dof" class="form-control" style="margin:10px; padding:30px" required>
             </div>
             <div class"form-group">
                <input type="number" class="form-control" name="age" 
-               style="margin:10px; padding:30px " placeholder="age" required>
+               style="margin:10px; padding:30px " placeholder="age" required id="age">
             </div>
             
             <div class"form-group">
@@ -136,7 +136,7 @@
             </div>
          </div>
          <div class="form-group">
-         <center><button type="submit" id="submit" class="btn form-control">Submit</button></center>
+         <center><button type="submit" id="submit" class="btn form-control" onclick="generate_controlNumber()">Submit</button></center>
         </div>     
    </form>
     </div>

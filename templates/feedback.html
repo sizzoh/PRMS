@@ -25,7 +25,7 @@
           <button class="close" data-dismiss="alert" aria-label="close">&times;</button>
         </div>
             {% endfor %}
-        <div class="header" style="padding:30px; text-align:center;background-color:#F8F8F8"><h3 class="text-capitalize">feedback body</h3></div>
+        <div class="header" style="padding:30px; text-align:center;background-color:#F8F8F8"><h5 class="text-capitalize">feedback body</h5></div>
          <form action="feedback" method="POST">
             {%csrf_token%}
             <div class="row">
@@ -34,10 +34,12 @@
                <input type="number" class="form-control" name="username"
                style="margin:10px; padding:30px " placeholder="sender's username" required>
             </div>
+            <br>
             <div class"form-group">
                <input type="email" class="form-control" name="email" 
                style="margin:10px; padding:30px " placeholder="sender's email" required>
             </div>
+            <br>
             <div class"form-group">
                <input type="number" class="form-control" name="subject"
                style="margin:10px; padding:30px " placeholder="subject" required>

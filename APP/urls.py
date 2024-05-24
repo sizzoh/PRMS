@@ -39,4 +39,9 @@ urlpatterns = [
     path('trends', views.trends, name='trends'),
     path('patient', views.patient, name='patient'),
     path('feedback', views.feedback, name='feedback'),
+    path('Query_patient', views.Query_patient, name='Query_patient'),
+    path('current_patient', views.current_patient, name='current_patient'),
+    path('pharmacy', views.pharmacy, name='pharmacy'),
+    path('payment', views.payment, name='payment'),
+    path('make_payment<int:pk>', views.make_payment, name='make_payment'),
 ]

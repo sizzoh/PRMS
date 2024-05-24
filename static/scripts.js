@@ -96,8 +96,9 @@ function home() {
     login_user.on('click', function () { 
       localStorage.removeItem("username");
       if (name === null) {
-        window.location = "/home";
+        window.location = "/index";
       }
+    //$("#shareBtn").prepend($("<span>")).text(count(name)).css({color:'green'});
     });
     
     //declare divs for managing their display
@@ -113,6 +114,25 @@ function home() {
     var div10 = $("#div10");
     var div11 = $("#div11");
     var div12 = $("#div12");
+    //display current registered patients
+    var currentPatients = div1.find("i").html();
+    if(currentPatients>=1){
+      div1.find("#new_p").append("new patients").click(function(){
+        $.ajax({
+          type: 'GET',
+          url: '/current_patient',
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+          success: function(patient_data){
+          window.location = ("/current_patient");
+          },
+          error: function(error, errorMessage, errorThrown){
+          console.log(error +  errorThrown+ ": " + errorMessage);
+          }
+        })
+      });
+    }else{
+      div1.find("#new_p").hide();
+    }
     //get username to authenticate user role
      $.ajax({
        type: "GET",
@@ -136,7 +156,7 @@ function home() {
                    user[k]["fields"].username === name 
                    //customer[i]["fields"].role === "customer" 
                  ) {
-                 loginUser.append("Patient");
+                 loginUser.append(": Patient ");
                  var divs = [div3, div4, div6, div7, div8, div9, div10];
                  for (var i in divs) {
                    divs[i]
@@ -200,10 +220,10 @@ function home() {
                  });
                } else if (
                  user[k]["fields"].username === name &&
-                 staff[j]["fields"].name === name ||
+                 staff[j]["fields"].name === name &&
                  staff[j]["fields"].role === "Doctor"
                ) {
-                 loginUser.append("Doctor");
+                 loginUser.append(": Doctor ");
                  let my_div = [div1, div4, div5, div6, div9];
                  for (var i in my_div) {
                    my_div[i]
@@ -220,7 +240,7 @@ function home() {
                  staff[j]["fields"].name === name &&
                  staff[j]["fields"].role === "receptionist"
                ) {
-                 loginUser.append("Receptionist");
+                 loginUser.append(": Receptionist ");
                  var my_divs = [div3, div4, div6, div5, div7, div8, div9];
                  for (var i in my_divs) {
                    my_divs[i]
@@ -237,7 +257,7 @@ function home() {
                  staff[j]["fields"].name === name &&
                  staff[j]["fields"].role === "accountant"
                ) {
-                 loginUser.append("Accountant");
+                 loginUser.append(": Accountant ");
                  let my_div = [div1, div3, div5, div7, div8, div9, div10];
                  for (var i in my_div) {
                    my_div[i]
@@ -254,7 +274,7 @@ function home() {
                  staff[j]["fields"].name === name &&
                  staff[j]["fields"].role === "laboratory technician"
                ) {
-                 loginUser.append("Lab Technician");
+                 loginUser.append(":Lab Technician ");
                  let my_div = [div1, div3, div5, div6, div7, div8, div9];
                  for (var i in my_div) {
                    my_div[i]
@@ -267,7 +287,7 @@ function home() {
                      });
                  }
                } else {
-                 loginUser.append("Admin");
+                 loginUser.append(": Admin ");
                  //  let my_div = [div1, div3, div5, div6, div7, div8, div9];
                  //  for (var i in my_div) {
                  //    my_div[i].attr("class", "col-md-3 disabled").find("a").on("click", function (e) {
@@ -308,13 +328,156 @@ function home() {
         url: "/RegDoc",
         data: { name: search_doctor.val() },
         csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-        success: function (response) { },
+        success: function (response) {},
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(errorThrown);
         },
       });
     });
+    //calculate age from date of birth
+    let dof = $("input[name=dof]");
+    dof.on("change", function(){
+      let inputDate = $(this).val();
+      let date = new Date();
+      let age = date.getFullYear() - new Date(inputDate).getFullYear();
+    $("input[name=age]").val(age);
+    });
+
+    //payment management
+  var cost =$("input[name=cost]");
+  const visit_case = $("#service_case");
+  let cases = ['Skin', 'Neurons','Brain', 'Bones','Gut','Children',
+  'Radiology','Counseling','Plastic Surgery', 'Eyes','Dental', 
+  'Heart','Tumor','Belly','Specialist'];
+
+   visit_case.on('click',function(event){
+    if(visit_case.val() ===cases[0]) {
+      cost.val(20000);
+     }
+     else if(visit_case.val() ===cases[1]) {
+       cost.val(30000); 
+     }
+     else if(visit_case.val() ===cases[2]) {
+       cost.val(30000); 
+     }
+     else if(visit_case.val() ===cases[3]) {
+       cost.val(25000); 
+     }
+     else if(visit_case.val() ===cases[4]) {
+       cost.val(15000); 
+     }
+     else if(visit_case.val() ===cases[5]) {
+       cost.val(10000); 
+     }
+     else if(visit_case.val() ===cases[6]) {
+       cost.val(30000); 
+     }
+     else if(visit_case.val() ===cases[7]) {
+       cost.val(15000); 
+     }
+     else if(visit_case.val() ===cases[8]) {
+       cost.val(30000); 
+     }
+     else if(visit_case.val() ===cases[9]) {
+       cost.val(25000); 
+     }
+     else if(visit_case.val() ===cases[10]) {
+       cost.val(30000); 
+     }
+     else if(visit_case.val() ===cases[11]) {
+       cost.val(30000); 
+     }
+     else if(visit_case.val() ===cases[12]) {
+       cost.val(20000); 
+     }
+     else if(visit_case.val() ===cases[13]) {
+       cost.val(10000); 
+     }
+     else if(visit_case.val() ===cases[14]) {
+       cost.val(35000); 
+     }
+   })
   });
+}
+
+// function getYear(){
+//   $(function(){
+//     const dateInput = $(this).val();
+//     const date = new Date(dateInput);
+//     if(dateInput){
+//       const age = $("#age");
+//       age.val(date.getFullYear());
+//     }
+//   })
+// }
+function hideNavigationBar(){
+  $(function () {
+    $("#sidebarMenu").fadeOut("slow", function(){
+      $(document).find($("button[type='button']")).click(function () {
+        //console.log("button clicked");
+        $("#sidebarMenu").fadeIn("slow");
+      }); 
+    })
+  })
+}
+
+function payment(){
+$(function(){
+  const cost =$("input[name=cost]");
+  const visit_case = $(this).val();
+  let cases = ['Skin', 'Neuron','Brain', 'Bones','Gut','Children',
+  'Radiology','Counseling','Plastic Surgery', 'Eyes','Dental', 
+  'Heart','Turmer','Belly','Specialist'];
+
+  if(visit_case ===cases[0]) {
+   cost.val(20000);
+  }
+  else if(visit_case ===cases[1]) {
+    cost.val(30000); 
+  }
+  else if(visit_case ===cases[2]) {
+    cost.val(30000); 
+  }
+  else if(visit_case ===cases[3]) {
+    cost.val(25000); 
+  }
+  else if(visit_case ===cases[4]) {
+    cost.val(15000); 
+  }
+  else if(visit_case ===cases[5]) {
+    cost.val(10000); 
+  }
+  else if(visit_case ===cases[6]) {
+    cost.val(20000); 
+  }
+  else if(visit_case ===cases[7]) {
+    cost.val(10000); 
+  }
+  else if(visit_case ===cases[8]) {
+    cost.val(30000); 
+  }
+  else if(visit_case ===cases[9]) {
+    cost.val(25000); 
+  }
+  else if(visit_case ===cases[10]) {
+    cost.val(30000); 
+  }
+  else if(visit_case ===cases[11]) {
+    cost.val(30000); 
+  }
+  else if(visit_case ===cases[12]) {
+    cost.val(30000); 
+  }
+  else if(visit_case ===cases[13]) {
+    cost.val(20000); 
+  }
+  else if(visit_case ===cases[14]) {
+    cost.val(10000); 
+  }
+  else if(visit_case ===cases[15]) {
+    cost.val(35000); 
+  }
+});
 }
 
 function admit() {
@@ -820,13 +983,39 @@ function search_medication() {
         url: '/medication',
         data: { 'name': items },
         csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-        success: function () {
-          
+        success: function (response) {
+          $.ajax({
+            type: 'GET',
+            url: '/Query_patient',
+            dataType: 'json',
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            success: function (responses) {
+            console.log(responses.data   + " current patiient");
+            },
+            error: function (err) {
+              console.log(err + " error while querying database");
+            }
+          })
         },
         error: function () {
           
         }
       })
     });
+  })
+}
+
+function generate_controlNumber(){
+  $(function () {
+    const randomNumbers = [];
+
+    for (let i = 0; i < 12; i++) {
+     const  controlNumber = Math.floor(Math.random() * 10);
+     //const  controlNumber = Math.floor(Math.random() * 10) + 1;
+     randomNumbers.push(controlNumber)
+      
+    }
+    const numbers = randomNumbers.toString().replaceAll(',',"");
+    alert("\npayment reqired \n\ncontrol number\n"+ numbers);   
   })
 }

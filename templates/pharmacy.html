@@ -1,0 +1,177 @@
+{%extends "base.html" %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0", maximum scale="1"/>
+    <title>home</title>
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+    <link href="{%static 'chart.js/Chart.css'%}" rel="stylesheet">
+   <link href="{%static 'chart.js/Chart.min.css'%}" rel="stylesheet">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+
+   <script src="{% static 'chart.js/Chart.bundle.js' %}"></script>
+   <script src="{% static 'chart.js/Chart.bundle.min.js' %}"></script>
+   <script src="{% static 'chart.js/Chart.js' %}"></script>
+   <script src="{% static 'chart.js/Chart.min.js' %}"></script>
+    <scrip type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+  </head>
+  <body>
+    {%block content%}
+    <br>
+   <div class="container-fluid justify-content-center">
+    <div class="container-sm">
+    <div class="row">
+     <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                    <label for="card-title"><h5>Total Store Count<i class="fas fa-bell float-end text-danger" id="new_p"> {{data}}</i></h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store</p>
+                        <h5 class="card-text">000</h5>
+                       <a href="{%url 'reception'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+        </div>
+         <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                    <label for="card-title"><h5>Maternal</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for maternal health</p>
+                        <h5 class="card-text">000</h5>
+                      <a href="{%url 'demographic'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                    <label for="card-title"><h5>Children</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for child care</p>
+                        <h5 class="card-text">000</h5>
+                        <a href="{%url 'medication'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff; ">
+                    <label for="card-title"><h5>skin  & internaal disease</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for skin diseases and internal diseases</p>
+                        <h5 class="card-text">000</h5>
+                        <a href="{%url 'Test'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                   <label for="card-title"><h5>Eyes</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store eyes care</p>
+                        <h5 class="card-text">000</h5>
+                       <a href="#" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                   <label for="card-title"><h5>Neurons and Muscles</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for neuro tretment and muscles</p>
+                        <h5 class="card-text">000</h5>
+                       <a href="#" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                   <label for="card-title"><h5>Communicable diseases</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for communicable dieases</p>
+                        <h5 class="card-text">000</h5>
+                       <a href="#" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                   <label for="card-title"><h5>Non communicable diseases</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for non communicable diseases</p>
+                        <h5 class="card-text">000</h5>
+                       <a href="{%url 'manage_appointment'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                   <label for="card-title"><h5>Dental & And related parts</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store Dental & And related parts</p>
+                        <h5 class="card-text">000</h5>
+                        <a href="{%url 'RegDoc'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                   <label for="card-title"><h5>STI & STDs</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for STI & STDs</p>   
+                        <h5 class="card-text">000</h5>
+                        <a href="{%url 'discharge'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                    <label for="card-title"><h5>Tumors</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store for vidonda</p>
+                        <h5 class="card-text">000</h5>
+                        <a href="{%url 'feedback'%}" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-4" style="justify-content:center; display:flex">
+                <div class="card" style="background-color:#ffffff;">
+                    <label for="card-title"><h5>bites & stings</h5></label>
+                    <div class="card-body">
+                        <p>This panel show the total medicines and drugs that are present in store Dental & And related </p>
+                        <h5 class="card-text">000</h5>
+                 <a href="#" class="small-box-footer text-secondary fs-5 text-decoration-none">Check Details<i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+       </div>
+   </div>
+ <br/>
+ <hr>
+  <footer class="container-fluid p-2 float-end fs-5" id="footer">
+    <p class="float-end"><a href="#" class="nav-link" style="margin-left:15px">Back to top</a></p>
+    <p>Copy Right &copy; PRMS v2.0,  All Right Reserved, Inc.&reg; 
+     Developed & maintained by Grayson Peter Contact me on <a href="tel:+255 752 943 225" 
+     class="text-decoration-none">075 294 3225</a>
+    <a href="#" style="float: right; margin-left:15px" class="text-decoration-none">Terms</a></p>
+  </footer>
+</div>
+</div>
+{%endblock%}
+{% comment %}#F0F8FF;#7FFFD4; bisque;#78adc2;#94bfac;cadetblue;cornflowerblue;cyan;azure;{% endcomment %}
+</body>
+</html>

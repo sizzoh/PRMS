@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+#from django.contrib.auth.models import AbstractUser
 import datetime
 # Create your models here.
 class customer(models.Model):
@@ -9,7 +9,6 @@ class customer(models.Model):
      password= models.CharField(max_length=20)
      
 class customers(models.Model):
-    card_number = models.IntegerField(null=False, blank=True)
     reg_name = models.CharField(max_length=100)
     id_number = models.IntegerField(null=False, blank=True)
     name = models.CharField(max_length=100)

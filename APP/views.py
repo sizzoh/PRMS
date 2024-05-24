@@ -1,13 +1,18 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.urls import reverse
 from .models import customers, Lab_result, Appointment, Medication, Staff, Status, Admission,feedback
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
+from django.core import serializers
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+#from datetime import timezone
+from django.utils import timezone
 import json
 # Create your views here.
 def index(request):
@@ -16,7 +21,9 @@ def index(request):
 @login_required(login_url="index")
 def home(request):
     app = Appointment.objects.all()
-    return render(request, 'home.html', {'app': app})
+    current_date = datetime.datetime.now()
+    current_patient = customers.objects.filter(date_created=current_date).count()
+    return render(request, 'home.html', {'app': app,"data":current_patient})
 
 @login_required(login_url="index")
 def demographic(request):
@@ -97,7 +104,6 @@ def logout(request):
 @login_required(login_url="index")   
 def customer(request):
     if request.method == 'POST':
-        card_number = request.POST['card_number']
         reg_name = request.POST['reg_name']
         id_number = request.POST['id_number']
         full_name = request.POST['full_name']
@@ -117,12 +123,15 @@ def customer(request):
         ten_cell_leader = request.POST['ten_cell_leader']
         street_chair_man_contact = request.POST['street_chair_man_contact']
         client_contact = request.POST['client_contact']
-        client = customers(card_number=card_number,reg_name=reg_name,id_number=id_number,
+        client = customers(reg_name=reg_name,id_number=id_number,
         name=full_name,dof=dof,age=age,weight=weight,height=height,
         file_number=file_number,role=role,marital_status=marital_status,day=visit_day,
         sex=sex, date_created=date_created, ward=ward, street=street, street_chair_man_contact=street_chair_man_contact,
-        street_chairman=street_chairman,ten_cell_leader= ten_cell_leader,client_contact=client_contact ) 
-        client.save()
+        street_chairman=street_chairman,ten_cell_leader= ten_cell_leader,client_contact=client_contact )
+        if(customers.objects.filter(file_number=file_number)):
+            messages.warning(request, "File number Already exists") 
+        else:     
+            client.save()
     return render(request, 'register.html')
 
 def edit_patient(request, pk):
@@ -342,8 +351,8 @@ def edit_staff(request,pk):
     
     return render(request, 'edit_staff.html', context)
 
-def delete_staff(request,pk):
-    staff_data = staff.objects.get(id=pk)
+def delete_staff(request, pk):
+    staff_data = Staff.objects.get(id=pk)
     staff_data.delete()
     
     return HttpResponseRedirect(reverse('RegDoc'))
@@ -601,4 +610,53 @@ def feedback(request):
 class CustomModel(AbstractUser):
 add fields required then add auth_user_model='myapp.myModel'
 '''   
-        
+
+def Query_patient(request):
+    current_patient = customers.objects.filter(date_created__iexact=timezone.now())
+    serialized_patient = serialize('json', current_patient)
+    data = json.loads(serialized_patient)
+    context ={
+        'data': data,
+    }
+    #print(timezone.now())
+    return JsonResponse(context, safe=False)
+
+def current_patient(request):
+    current_date = datetime.datetime.now()
+    current_patient = customers.objects.filter(date_created=current_date).values()
+    return render(request, 'current_patients.html', {"attended":current_patient})      
+
+def pharmacy(request):
+    return render(request, 'pharmacy.html')
+
+def payment(request):
+    if "number" in request.GET:
+        number = request.GET["number"]
+        attended = customers.objects.filter(file_number__icontains=number)
+    elif "name" in request.GET:
+         name = request.GET["name"]
+         attended = customers.objects.filter(name__icontains=name)
+    elif "phone" in request.GET:
+        phone = request.GET["phone"]
+        attended = customers.objects.filter(client_contact__icontains=phone)
+    elif "visit_date" in request.GET:
+        date = request.GET["visit_date"]
+        attended = customers.objects.filter(date_created__iexact=date)    
+    else:
+        attended = customers.objects.filter(date_created=datetime.datetime.now())          
+    context = {
+        "attended": attended,
+    }    
+    return render(request, 'payments.html',context)
+
+def make_payment(request, pk):
+    existing_details = customers.objects.filter(id=pk)
+    person_info = customers.objects.filter(id=pk)
+    
+    context = {
+        'data': existing_details,
+        'person_info': person_info
+    }
+    return render(request, 'make_payment.html', context)
+
+    

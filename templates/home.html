@@ -24,14 +24,14 @@
    <script src="{% static 'chart.js/Chart.min.js' %}"></script>
     <scrip type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
   </head>
-  <body onload="home();">
+  <body onload="home(),search_medication();">
     {%block content%}
     <br>
    <div class="container-fluid justify-content-center">
     <div class="row">
      <div class="col-md-3" style="justify-content:center; display:flex" id="div1">
                 <div class="card" style="background-color:#FAEBD7;">
-                    <label for="card-title"><h4>Reception & Admission <i class="fas fa-bell float-end"></i></h4></label>
+                    <label for="card-title"><h5>Reception&Admission<i class="fas fa-bell float-end text-danger" id="new_p"> {{data}}</i></h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                        <a href="{%url 'reception'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -40,7 +40,7 @@
         </div>
          <div class="col-md-3" style="justify-content:center; display:flex" id="div2">
                 <div class="card" style="background-color:#FAEBD7;">
-                    <label for="card-title"><h4>patient records EHR</h4></label>
+                    <label for="card-title"><h5>patient records EHR</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                       <a href="{%url 'demographic'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -50,7 +50,7 @@
 
              <div class="col-md-3" style="justify-content:center; display:flex" id="div3">
                 <div class="card" style="background-color:#FAEBD7;">
-                    <label for="card-title"><h4>prescription & medication</h4></label>
+                    <label for="card-title"><h5>prescription & medication</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                         <a href="{%url 'medication'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -60,7 +60,7 @@
 
              <div class="col-md-3" style="justify-content:center; display:flex" id="div4">
                 <div class="card" style="background-color:#FAEBD7; ">
-                    <label for="card-title"><h4>Test and Lab result</h4></label>
+                    <label for="card-title"><h5>Test and Lab result</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                         <a href="{%url 'Test'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -70,7 +70,7 @@
                 {%for i in app%}
              <div class="col-md-3" style="justify-content:center; display:flex" id="div5">
                 <div class="card" style="background-color:#bbc9a5;">
-                   <label for="card-title"><h4>Book appointment</h4></label>
+                   <label for="card-title"><h5>Book appointment</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                        <a href="{%url 'appointment' i.patient_number%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -80,27 +80,27 @@
             {%endfor%}
             <div class="col-md-3" style="justify-content:center; display:flex" id="div6">
                 <div class="card" style="background-color:#bbc9a5;">
-                   <label for="card-title"><h4>Accoutants</h4></label>
+                   <label for="card-title"><h5>Accoutants</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
-                       <a href="#" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
+                       <a href="{%url 'payment'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-3" style="justify-content:center; display:flex" id="div7">
                 <div class="card" style="background-color:#bbc9a5;">
-                   <label for="card-title"><h4>pharmacy</h4></label>
+                   <label for="card-title"><h5>pharmacy</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
-                       <a href="#" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
+                       <a href="{%url 'pharmacy'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-3" style="justify-content:center; display:flex" id="div8">
                 <div class="card" style="background-color:#bbc9a5;">
-                   <label for="card-title"><h4>appointment management</h4></label>
+                   <label for="card-title"><h5>appointment management</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                        <a href="{%url 'manage_appointment'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -110,7 +110,7 @@
 
              <div class="col-md-3" style="justify-content:center; display:flex" id="div9">
                 <div class="card" style="background-color:lightgray;">
-                   <label for="card-title"><h4>Admin and staff management</h4></label>
+                   <label for="card-title"><h5>Admin and staff management</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                         <a href="{%url 'RegDoc'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -120,7 +120,7 @@
 
              <div class="col-md-3" style="justify-content:center; display:flex" id="div10">
                 <div class="card" style="background-color:lightgray;">
-                   <label for="card-title"><h4>discharge</h4></label>
+                   <label for="card-title"><h5>discharge</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                         <a href="{%url 'discharge'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -130,7 +130,7 @@
 
              <div class="col-md-3" style="justify-content:center; display:flex" id="div11">
                 <div class="card" style="background-color:lightgray;">
-                    <label for="card-title"><h4>Feedback and survey</h4></label>
+                    <label for="card-title"><h5>Feedback and survey</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                         <a href="{%url 'feedback'%}" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -140,7 +140,7 @@
 
              <div class="col-md-3" style="justify-content:center; display:flex" id="div12">
                 <div class="card" style="background-color:lightgray;">
-                    <label for="card-title"><h4>communication & messaging</h4></label>
+                    <label for="card-title"><h5>communication & messaging</h5></label>
                     <div class="card-body">
                         <p class="card-text">Ensure the proper use of the system for better performance</p>
                         <a href="#" class="small-box-footer text-success fs-5 text-decoration-none">Check In <i class="fas fa-arrow-circle-right"></i></a>
@@ -152,9 +152,11 @@
       style="display: block;"></canvas>
     </div>
  </div>
- <footer class="container p-2 float-end fs-5" id="footer">
+ <br/>
+ <hr>
+ <footer class="container-fluid p-2 float-end fs-5" id="footer">
     <p class="float-end"><a href="#" class="nav-link" style="margin-left:15px">Back to top</a></p>
-    <p>Copy Right &copy; PRMS v2.0,  All Right Reserved, Inc.&reg; Developed & maintained by Greyson Peter Contact me on <a href="tel: +255 752 943 225" >call</a><a href="#" style="float: right; margin-left:15px">Terms</a></p>
+    <p>Copy Right &copy; PRMS v2.0,  All Right Reserved, Inc.&reg; Developed & maintained by Grayson Peter Contact me on <a href="tel: +255 752 943 225"  class="text-decoration-none"> 075 294 3225</a><a href="#" style="float: right; margin-left:15px" class="text-decoration-none">Terms</a></p>
   </footer>
 </div>
 {%endblock%}

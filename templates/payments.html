@@ -1,0 +1,80 @@
+{%extends 'base.html'%}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+   <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+   <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+   <!--<link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">-->
+
+   <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+   <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+   <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+   <script  src="{%static 'scripts.js'%}"></script>
+   <!--<script  src="{%static 'chart.min.js'%}"></script>-->
+   <script  src="{%static 'jquery.min.js'%}"></script>
+   <script></script>
+   </head>
+   <body onload="query()">
+   {%block content%}
+   <div class="container-l">
+       <div class="form-group">
+       </div>
+       <form>
+           {%csrf_token%}
+           <div class="row">
+       <div class="col-md-6"><input type="date" class="form-control mb-3 p-4" name="date" id="visit_date" onclick="searchData()"></div>
+       <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="patient_number" id="patient_number" maxlength="6" onkeypress="searchData()" placeholder="patient number"></div>
+       <div class="col-md-6"><input type="text" class="form-control mb-3 p-4" name="patient_name" id="patient_name" onkeypress="searchData()" placeholder="patient name"></div>
+       <div class="col-md-6"><input type="number" class="form-control mb-3 p-4" name="phone" id="patient_phone" maxlength="10" placeholder="phone number" onkeypress="searchData()"></div>
+        </div>
+        </form>
+        <div class="table-responsive">
+          <table class="table table-striped" id="table_data">
+           <thead>
+               <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">patient number</th>
+                   <th scope="col">name</th>
+                   <th scope="col">age</th>
+                   <th scope="col">gender</th>
+                   <th scope="col">marital status</th>
+                   <th scope="col">address</th>
+                   <th scope="col">visiting day</th>
+                   <th scope="col">visiting date</th>
+                   <th scope="col">contacts</th>
+                   <th scope="col">DOB</th>
+                   <th scope="col">weight (kg)</th>
+                   <th scope="col">Action</th>
+
+               </tr>
+           </thead>
+           <tbody>
+               {%for i in attended%}
+               <tr>
+                   <td>{{i.id}}</td>
+                   <td>{{i.file_number}}</td>
+                   <td>{{i.name}}</td>
+                   <td>{{i.age}}</td>
+                   <td>{{i.sex}}</td>
+                   <td>{{i.marital_status}}</td>
+                   <td>{{i.street}}</td>
+                   <td>{{i.day}}</td>
+                   <td>{{i.date_created}}</td>
+                   <td>{{i.client_contact}}</td>
+                   <td>{{i.dof}}</td>
+                   <td>{{i.weight}}</td>
+                   <td><a href="{% url 'make_payment' i.id%}" class="text-bg-info opacity-75 text-decoration-none p-2">Make payment</a></td>
+               </tr>
+               {% endfor %}
+           </tbody>
+          </table>
+       </div>
+   </div>
+   {%endblock%} 
+   </body>
+   </html>

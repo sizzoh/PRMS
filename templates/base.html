@@ -24,13 +24,16 @@
     <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
     <script type="text/javascript" src="{%static 'jquery.signature.js'%}"></script>
     <script type="text/javascript" src="{%static 'jquery.signature.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'sweetalert2.min.js'%}"></script>
+    
 <style>
 </style>
 </head>
-<body onload="home(), chart();">  
+<body onload="home(),chart();" onscroll="hideNavigationBar()">  
 <header class="navbar navbar-dark sticky-top flex-sm-nowrap p-0 shadow" style="background-color:#47484a">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Logo</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#"></a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+   data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button> 
   <div class="navbar-nav">
@@ -58,7 +61,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{%url 'reception'%}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
               stroke-linecap="round" stroke-linejoin="round" class="feather feather-file" 
@@ -69,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{%url 'demographic'%}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
               stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart" 
@@ -78,17 +81,7 @@
               Patient EHR
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" id="budget" target="_budget">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
-              stroke-linecap="round" stroke-linejoin="round" class="feather feather-users" 
-              aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              Pharmacy
-            </a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="#" id="report">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
@@ -101,7 +94,7 @@
             </a>
           </li>
 
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
             <a class="nav-link" href="#" id="expense" target="_expense">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
@@ -111,9 +104,9 @@
               </line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
               Accounting
             </a>
-          </li>
+          </li> {% endcomment %}
 
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
@@ -123,10 +116,10 @@
               </polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
               Management work
             </a>
-          </li>
+          </li> {% endcomment %}
 
           <li class="nav-item">
-            <a class="nav-link" href="#" id="sales">
+            <a class="nav-link" href="{%url 'feedback'%}" id="sales">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
               stroke-linejoin="round" class="feather feather-layers" aria-hidden="true">
@@ -176,36 +169,37 @@
             <a class="nav-link" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
-               stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" 
+               stroke-linecap="round" stroke-linejoin="round" class="fas fa fa-help" 
                aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                <polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line>
                <line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Social engagement
+              Help
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
-               stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" 
-               aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-               <polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line>
-               <line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Year-end sale
+            <a class="nav-link" href="#" id="budget" target="_budget">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+              stroke-linecap="round" stroke-linejoin="round" class="feather feather-users" 
+              aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              Social engagement
             </a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="chartjs-size-monitor">
     <div class="chartjs-size-monitor-expand"><div class=""></div></div>
     <div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="shareBtn">Share</button>
             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
           </div>
         </div>
