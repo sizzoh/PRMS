@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="" name="viewport" content="width=device-width, initial-scale=1.0", maximum scale="1"/>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0", maximum scale="1"/>
 <title>home</title>
 <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
     <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
@@ -29,7 +29,7 @@
 <style>
 </style>
 </head>
-<body onload="home(),chart();" onscroll="hideNavigationBar()">  
+<body onload="home(),chart(),Handle_appointment();" onscroll="hideNavigationBar()">  
 <header class="navbar navbar-dark sticky-top flex-sm-nowrap p-0 shadow" style="background-color:#47484a">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#"></a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
@@ -39,7 +39,7 @@
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="{%url 'logout'%}">
-        <p id="user"></p><p id="loginUser"></p>  Sign out</a>
+        <span id="user"></span><span id="loginUser"></span>  Sign out</a>
     </div>
   </div>
 </header>
@@ -196,7 +196,7 @@
     <div class="chartjs-size-monitor-expand"><div class=""></div></div>
     <div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h4 class="h2">Dashboard</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary" id="shareBtn">Share</button>

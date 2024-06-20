@@ -343,7 +343,7 @@ function home() {
     $("input[name=age]").val(age);
     });
 
-    //payment management
+    //payment management section
   var cost =$("input[name=cost]");
   const visit_case = $("#service_case");
   let cases = ['Skin', 'Neurons','Brain', 'Bones','Gut','Children',
@@ -376,7 +376,7 @@ function home() {
        cost.val(15000); 
      }
      else if(visit_case.val() ===cases[8]) {
-       cost.val(30000); 
+       cost.val(35000); 
      }
      else if(visit_case.val() ===cases[9]) {
        cost.val(25000); 
@@ -396,9 +396,258 @@ function home() {
      else if(visit_case.val() ===cases[14]) {
        cost.val(35000); 
      }
-   })
-  });
+   });
+   //handle receipt container
+$('#receipt_container').css({
+  backgroundColor: 'cyan',
+  maxWidth: '50%',
+  maxHeight: '100%',
+  marginLeft:"30%",
+
+});
+var payer = $("input[name=payer]").val();
+   var payment_day = $("input[name=payment_day]").val();
+   var payment_time = $("input[name=payment_time]").val();
+   var pay_date = $("input[name=payment_date]").val();
+   var visit_cases = $("select[name=visit_case]").val();
+   var pay_amount = $("input[name=cost").val();
+   var controlNumber = $("input[name=control_number]").val();
+
+   var bntPay = $("button[name=payment]");
+   var divPay = $("#receipt_container");
+   var payer_para = $("p").text(payer).prepend("Name: ");
+   var day_para = $("<p>").text(payment_day).prepend("On: ");
+   var time_para = $("<p>").text(payment_time).prepend("At: ");
+   var date_para = $("<p>").text(pay_date).prepend("During: ");
+   var case_para = $("<p>").text(visit_cases).prepend("For: ").append("Checkup");
+   var amount_para = $("<p>").text(pay_amount).prepend("Paid Amount: ").append("Tsh Cash");
+   var control_number_para = $("<p>").text(controlNumber).prepend("Paid Control Number: ");
+
+   bntPay.on("click", function(e) {
+    alert("button click");
+    e.preventDefault();
+    divPay.append(payer_para+"<br> "+day_para+"<br> "+time_para+"<br> "+date_para+"<br>"+case_para+"<br> "+amount_para+"<br> "+control_number_para);
+    $("#container_receipt").append(divPay);
+    print(divPay);
+   });
+   Handle_appointment();
+});
 }
+
+function Handle_appointment(){
+  $(function() {
+    var name = localStorage.getItem('username');
+    //display appointments inaccordance to login user
+    $.ajax({
+      type: "GET",
+      url: "/Query_appointment",
+      dataType: "json",
+      data:{name: name},
+      success: function(data) {
+        var appointment = data.appointment_data;
+        let table = $("#tbl_appointment tbody");
+        table.empty();
+        for (let i in appointment) {
+          var row = $("<tr>");
+          var a = $("<a>").attr({"href": "#"});
+          let button1= $("<button>").attr({"class": "btn btn-info"}).text("Edit").append($("<i>").attr({"class":"fa fa-pencil"}));
+          let button2= $("<button>").attr({"class": "btn btn-danger"}).text("Delete").append($("<i>").attr({"class":"fa fa-trash-can"}));
+          
+          var td = $("<td>").append(a).append(button2).prepend(button1);
+          let td2 = $("<td>").text(localStorage.getItem("status"));
+          row.append($("<td>").text(appointment[i]["pk"]));
+          row.append($("<td>").text(appointment[i]["fields"].patient_number));
+          row.append($("<td>").text(appointment[i]["fields"].name));
+          row.append($("<td>").text(appointment[i]["fields"].age));
+          row.append($("<td>").text(appointment[i]["fields"].gender));
+          row.append($("<td>").text(appointment[i]["fields"].marital));
+          row.append($("<td>").text(appointment[i]["fields"].address));
+          row.append($("<td>").text(appointment[i]["fields"].phone));
+          row.append($("<td>").text(appointment[i]["fields"].category));
+          row.append($("<td>").text(appointment[i]["fields"].consultant_name));
+          row.append($("<td>").text(appointment[i]["fields"].consultant_contacts));
+          row.append($("<td>").text(appointment[i]["fields"].date));
+          row.append($("<td>").text(appointment[i]["fields"].start_date));
+          row.append($("<td>").text(appointment[i]["fields"].end_date));
+          row.append(td);
+          row.append(td2);
+          button1.on("click", function(e) {
+            $.ajax({
+              type: "GET",
+              url: "/edit_appointment",
+              data:{pk:appointment[i]["pk"]},
+              csrfmiddlewaretoken:$("input[name='csrfmiddlewaretoken']").val(),
+              success: function(data) {
+                window.location = ("edit_appointment?pk="+appointment[i]["pk"]);
+              },
+              error: function(jqXHR, textStatus, errorThrown){
+                console.log(errorThrown);
+              }
+            }) 
+          });
+          button2.on("click", function(e) {
+            $.ajax({
+              type: "GET",
+              url: "/delete_appointment",
+              data:{pk:appointment[i]["pk"]},
+              csrfmiddlewaretoken:$("input[name='csrfmiddlewaretoken']").val(),
+              success: function(data) {
+                window.location = ("delete_appointment?pk="+appointment[i]["pk"]);
+              },
+              error: function(jqXHR, textStatus, errorThrown){
+                console.log(errorThrown);
+              }
+            }) 
+          });
+          let buttonAccept = $("#accept");
+          let buttonReject = $("#reject");
+          buttonAccept.click(function(){
+            td2.text("Accepted");
+            localStorage.setItem("status",td2.text());
+            window.location = ("Appointment_details")
+          });
+          buttonReject.click(function(){
+            td2.text("Rejected");
+            localStorage.setItem("status",td2.text());
+            window.location = ("RejectedAppointment")
+          });
+        }
+        table.append(row);
+        //table to review the appointment feedback
+        let table_feedback = $("#tbl_appointment_review");
+        let tbl_feedback_body =$("#tbl_appointment_review tbody");
+        table_feedback.hide();
+        $("#schedule").hide();
+        //table to review the appointment feedback rejected
+        let table_feedback_rejected = $("#tbl_appointment_review_rejected");
+        let tbl_feedback_body_rejected =$("#tbl_appointment_review_rejected tbody");
+        table_feedback_rejected.hide();
+        $("#schedules").hide();
+        if (localStorage.getItem("status") == "Accepted"){
+            $.ajax({
+            type: "GET",
+            url: "Query_AppointmentAccepted",
+            dataType: "json",
+            csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val(),
+            success: function(response){
+            let appointment_accepted = response.data;
+            let row = $("<tr>");
+            var a = $("<a>").attr({"href": "#"});
+            //let button3= $("<button>").attr({"class": "btn btn-info"}).text("Edit").append($("<i>").attr({"class":"fa fa-pencil"}));
+            //let button4= $("<button>").attr({"class": "btn btn-danger"}).text("Delete").append($("<i>").attr({"class":"fa fa-trash-can"}));
+            //var td = $("<td>").append(a).append(button4).prepend(button3);
+            row.append($("<td>").text(appointment_accepted[i]["pk"]));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].name));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].email));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].address));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].phone));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].specialty));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].date));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].start_time));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].end_time));
+            row.append($("<td>").text(appointment_accepted[i]["fields"].cost));
+            //row.append(td);
+
+            $("#btn_review_appointment").click(function(e) {
+              tbl_feedback_body.append(row);
+              table_feedback.append(tbl_feedback_body)
+              $("#schedule").show();
+              table_feedback.show();
+            })
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+          console.log(errorThrown);
+          }
+        });
+        }
+       else if (localStorage.getItem("status") == "Rejected"){
+          $.ajax({
+          type: "GET",
+          url: "Query_AppointmentRejected",
+          dataType: "json",
+          csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val(),
+          success: function(response){
+          let appointment_accepted = response.data;
+          let row = $("<tr>");
+          let a = $("<a>").attr({"href": "#"});
+          //let button3= $("<button>").attr({"class": "btn btn-info"}).text("Edit").append($("<i>").attr({"class":"fa fa-pencil"}));
+          //let button4= $("<button>").attr({"class": "btn btn-danger"}).text("Delete").append($("<i>").attr({"class":"fa fa-trash-can"}));
+          //var td = $("<td>").append(a).append(button4).prepend(button3);
+          row.append($("<td>").text(appointment_accepted[i]["pk"]));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].name));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].email));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].address));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].phone));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].specialty));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].date));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].reason));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].day));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].start_time));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].end_time));
+          row.append($("<td>").text(appointment_accepted[i]["fields"].cost));
+          //row.append(td);
+
+          $("#btn_review_appointment").click(function(e) {
+            tbl_feedback_body_rejected.append(row);
+            table_feedback_rejected.append(tbl_feedback_body_rejected)
+            $("#schedules").show();
+            table_feedback_rejected.show();
+          })
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        console.log(errorThrown);
+        }
+      });
+      }
+        
+       for(var i in appointment) {
+        var file_number = appointment[i]["fields"].patient_number;
+        $.ajax({
+          type: "GET",
+          url: "/appointment",
+          data:{file_number: file_number},
+          success: function(data) {
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+            console.log(errorThrown);
+          }
+        });
+       }
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        console.log(errorThrown+ " "+textStatus);
+      }
+    });
+  })
+}
+// function printReceipt(){
+//   $(function(){
+//    var payer = $("input[name=payer").val();
+//    var payment_day = $("input[name=payment_day").val();
+//    var payment_time = $("input[name=payment_time").val();
+//    var pay_date = $("input[name=payment_date").val();
+//    var visit_case = $("select[name=visit_case").val();
+//    var pay_amount = $("input[name=cost").val();
+//    var controlNumber = $("input[name=control_number").val();
+
+//    var bntPay = $("button[name=payment");
+//    var divPay = $("#receipt_container").attr("class","container-lg");
+//    var payer_para = $("<p>").html(payer).prepend("Name: ");
+//    var day_para = $("<p>").html(payment_day).prepend("On: ");
+//    var time_para = $("<p>").html(payment_time).prepend("At: ");
+//    var date_para = $("<p>").html(pay_date).prepend("During: ");
+//    var case_para = $("<p>").html(visit_case).prepend("For: ").append("Checkup");
+//    var amount_para = $("<p>").html(pay_amount).prepend("Paid Amount: ").append("Tsh Cash");
+//    var control_number_para = $("<p>").html(controlNumber).prepend("Paid Control Number: ");
+
+//    bntPay.on("click", function(e) {
+//     //alert("button click");
+//     e.preventDefault();
+//     divPay.append(payer_para+"<br> "+day_para+"<br> "+time_para+"<br> "+date_para+"<br>"+case_para+"<br> "+amount_para+"<br> "+control_number_para);
+//     print(divPay);
+//    });
+//   });
+// }
 
 // function getYear(){
 //   $(function(){
@@ -499,7 +748,6 @@ function admit() {
           csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
           success: function (response2) {
             console.log(response.data);
-            alert("function has been called");
             var file;
             var card = $("#card_number");
             var id = $("#id_number");
@@ -634,7 +882,6 @@ function searchData() {
         if (name.val().length > 0) {
           table.empty();
           if (data.length > 0) {
-            console.log(data);
             for (let i in data) {
               var row = $("<tr>");
               var a = $("<a>").attr({"href": "#","class":"text-bg-success text-decoration-none p-2"}).text("Check_In");

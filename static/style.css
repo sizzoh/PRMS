@@ -160,3 +160,10 @@ cursor: pointer;
 .disabled{
     opacity:30%;
 }
+
+#receipt{
+    background-color: #3f0679;
+    max-width: 50%;
+    max-height: fit-content;
+    /*display:none !important;*/
+}

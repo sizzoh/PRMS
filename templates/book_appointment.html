@@ -25,6 +25,7 @@
          <form action-="Book_appointment" method="POST">
             {%csrf_token%}
             <div class="row">
+               {%if app > 0%}<div class="alert alert-warning text-capitalize fs-5"><marquee>be reminded that maximum appointments per day is 10 and current already booked appointments are {{app}} . ⚠⚠⚠⚠⚠⚠</marquee></div>{% endif%}
             <div class="col-md-6" id="personal1">
             <h6>appointment info please fill all required fields</h6>
             <div class"form-group">

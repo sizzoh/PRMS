@@ -23,11 +23,11 @@
          <form action="customer" method="POST" id="register">
             {%csrf_token%}
             <div class="row">
-               <div class="col-md-6" id="personal1">
-                  {% for message in messages%}
+               {% for message in messages%}
                  <div class="alert alert-{{message.tags}} text-center">{{message}}
                   </div>
                   {% endfor %}
+               <div class="col-md-6" id="personal1">   
             <h5>Personal Details</h5>
             <div class"form-group">
                <input type="text" class="form-control" name="reg_name" 
