@@ -70,7 +70,8 @@
                     <td>{{i.client_contact}}</td>
                     <td>{{i.dof}}</td>
                     <td>{{i.weight}}</td>
-                    <td><a href="{% url 'admit_patient' i.file_number%}" class="text-bg-success text-decoration-none p-1">Check_In</a></td>
+                    <td><button class="btn btn-success"><a href="{% url 'admit_patient' i.file_number%}" 
+                    class="text-bg-success text-decoration-none p-1">Check_In</a></button></td>
                 </tr>
                 {% endfor %}
             </tbody>

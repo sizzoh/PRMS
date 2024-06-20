@@ -1,13 +1,18 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import customers, Lab_result, Appointment, Medication, Staff, Status, Admission
+from django.urls import reverse
+from .models import customers, Lab_result, Appointment, Medication, Staff, Status, Admission,feedback,Payments,Accepted_appointment,Rejected_appointment
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
+from django.core import serializers
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+#from datetime import timezone
+from django.utils import timezone
 import json
 # Create your views here.
 def index(request):
@@ -16,7 +21,9 @@ def index(request):
 @login_required(login_url="index")
 def home(request):
     app = Appointment.objects.all()
-    return render(request, 'home.html', {'app': app})
+    current_date = datetime.datetime.now()
+    current_patient = customers.objects.filter(date_created=current_date).count()
+    return render(request, 'home.html', {'app': app,"data":current_patient})
 
 @login_required(login_url="index")
 def demographic(request):
@@ -97,7 +104,6 @@ def logout(request):
 @login_required(login_url="index")   
 def customer(request):
     if request.method == 'POST':
-        card_number = request.POST['card_number']
         reg_name = request.POST['reg_name']
         id_number = request.POST['id_number']
         full_name = request.POST['full_name']
@@ -117,14 +123,18 @@ def customer(request):
         ten_cell_leader = request.POST['ten_cell_leader']
         street_chair_man_contact = request.POST['street_chair_man_contact']
         client_contact = request.POST['client_contact']
-        client = customers(card_number=card_number,reg_name=reg_name,id_number=id_number,
+        client = customers(reg_name=reg_name,id_number=id_number,
         name=full_name,dof=dof,age=age,weight=weight,height=height,
         file_number=file_number,role=role,marital_status=marital_status,day=visit_day,
         sex=sex, date_created=date_created, ward=ward, street=street, street_chair_man_contact=street_chair_man_contact,
-        street_chairman=street_chairman,ten_cell_leader= ten_cell_leader,client_contact=client_contact ) 
-        client.save()
+        street_chairman=street_chairman,ten_cell_leader= ten_cell_leader,client_contact=client_contact )
+        if(customers.objects.filter(file_number=file_number)):
+            messages.warning(request, "File number Already exists") 
+        else:     
+            client.save()
     return render(request, 'register.html')
 
+@login_required(login_url="index")
 def edit_patient(request, pk):
     details = customers.objects.filter(id__exact=pk)
     context = {
@@ -197,9 +207,17 @@ def Test(request):
 
 
 @login_required(login_url="index")
-def appointment(request, pk):
-    app = Appointment.objects.filter(patient_number__iexact=pk)
-    return render(request, 'appointment.html', {"appointment": app})
+def appointment(request):
+    context1 = {}
+    if "file_number" in request.GET:
+        patient_number = request.GET["file_number"]
+        app = Appointment.objects.filter(patient_number=patient_number)
+        context = {
+         "appointment": app   
+        }
+        context1.update(context)
+        print(context1) 
+    return render(request, 'appointment.html',context1)
 
 
 @login_required(login_url="index")
@@ -221,10 +239,18 @@ def Book_appointment(request):
         
         appointments = Appointment(patient_number=patient_number, name=name, 
         age=age,gender=gender,marital=marital,address=address,phone=phone,
-        category=category, consultant_name=consultant_name,
+        category=category, consultant_name=consultant_name,date=date,
         consultant_contacts=consultant_contacts,start_date=start_date,end_date=end_date)
-        appointments.save()
-    return render(request, 'book_appointment.html')
+        
+        current_appointment = Appointment.objects.filter(date=datetime.datetime.now()).count()
+        if current_appointment > 10:
+            messages.warning(request, "Today's Appointment Intake Is Full. Please Wait Next Day... We Are Glad That You Here!!😊🎉")
+            return HttpResponseRedirect(reverse('book_appointment.html'))
+        else:
+            appointments.save()
+    all_appointments = Appointment.objects.filter(date=datetime.datetime.now()).count()
+    context = {"app": all_appointments}        
+    return render(request, 'book_appointment.html',context)
 
 
 @login_required(login_url="index")
@@ -233,6 +259,7 @@ def manage_appointment(request):
     context= {
         "book":appointment
     }
+    print(context)
     return render(request, 'manage_appointment.html', context)
 
 
@@ -293,6 +320,47 @@ def appointmentList(request, pk):
     }    
     return render(request, 'appointment.html',context)
 
+@login_required(login_url="index")
+def Query_AppointmentAccepted(request):
+    accepted = Accepted_appointment.objects.all()
+    querySet = serialize('json', accepted)
+    data = json.loads(querySet)
+    context = {
+        'data': data,
+    }
+    return JsonResponse(context, safe=False)
+
+def RejectedAppointment(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        specialty = request.POST.get('specialty')
+        date = request.POST.get('date')
+        reason = request.POST.get('reason')
+        day = request.POST.get('day')
+        start_time = request.POST.get('start_time')
+        end_time = request.POST.get('end_time')
+        cost = request.POST.get('cost')
+        rejected = Rejected_appointment(name=name,email=email,address=address,
+        phone=phone,specialty=specialty,date=date,reason=reason,day=day,
+        start_time=start_time,end_time=end_time,cost=cost)
+        rejected.save()
+        if Rejected_appointment.objects.all().values() is not None:
+            messages.info(request, "Your Feddback has Been Sent successfully")
+            return HttpResponseRedirect(reverse('RejectedAppointment'))
+    return render(request, 'rejected_appointment.html')    
+        
+
+def Query_AppointmentRejected(request):
+    rejected = Rejected_appointment.objects.all()
+    querySet = serialize('json', rejected)
+    data = json.loads(querySet)
+    context = {
+        'data': data,
+    }
+    return JsonResponse(context, safe=False)    
 
 @login_required(login_url="index")
 def doctor(request):
@@ -336,14 +404,16 @@ def RegDoc(request):
               }   
     return render(request, 'registered_doctors.html', context)
 
+@login_required(login_url="index")
 def edit_staff(request,pk):
     staff_details = Staff.objects.filter(id__exact=pk)
     context = {'staff_details':staff_details}
     
     return render(request, 'edit_staff.html', context)
 
-def delete_staff(request,pk):
-    staff_data = staff.objects.get(id=pk)
+@login_required(login_url="index")
+def delete_staff(request, pk):
+    staff_data = Staff.objects.get(id=pk)
     staff_data.delete()
     
     return HttpResponseRedirect(reverse('RegDoc'))
@@ -393,6 +463,7 @@ def existing_prescriptions(request, pk):
         print(context, "empty data provided")
         return render(request, 'prescriptions.html', context)
 
+@login_required(login_url="index")
 def searchData(request):
     if "patient_number" in request.GET:
         number = request.GET["patient_number"]
@@ -440,6 +511,7 @@ def searchData(request):
         return JsonResponse(context, safe=False)
     
 
+@login_required(login_url="index")
 def status(request):
     if "accept" in request.GET:
         accept = request.GET["accept"]
@@ -458,17 +530,104 @@ def status(request):
         context = {"status": rejected}
         
         return JsonResponse(context, safe=False)
-        
+
+@login_required(login_url="index")        
 def  edit_appointment(request, pk):
     appointment = Appointment.objects.filter(id__iexact=pk)
     context = {'appointmentList': appointment}
     return render(request, 'edit_appointment.html', context)
 
+def  edit_appointment(request):
+    context1 = {}
+    if "pk" in request.GET:
+       id = request.GET["pk"]
+       appointment = Appointment.objects.filter(id__iexact=id)
+       context = {'appointmentList': appointment}
+       context1.update(context)
+    return render(request, 'edit_appointment.html', context1)
+
+def  Appointment_edit(request):
+    if request.method == 'POST':
+       id = request.POST["pk"]
+       patient_number = request.POST['patient_number']
+       name = request.POST['name']
+       age = request.POST['age']
+       gender = request.POST['gender']
+       marital = request.POST['marital']
+       address = request.POST['address']
+       phone = request.POST['phone']
+       category = request.POST['category']
+       consultant_name = request.POST['consultant_name']
+       consultant_contacts = request.POST['consultant_contacts']
+       date = request.POST['date']
+       start_date = request.POST['start_time']
+       end_date = request.POST['end_time']
+       
+       appointment = Appointment.objects.filter(id__iexact=id).update(
+        patient_number=patient_number, name=name, 
+        age=age,gender=gender,marital=marital,address=address,phone=phone,
+        category=category, consultant_name=consultant_name,date=date,
+        consultant_contacts=consultant_contacts,start_date=start_date,end_date=end_date   
+       )
+       
+       if appointment == True:
+           messages.success(request, "Appointment Updated Successfully")
+           return redirect("appointment") 
+       #context = {'appointmentList': appointment}   
+    return render(request, 'edit_appointment.html')
+
+@login_required(login_url="index")
 def delete_appointment(request,pk):
     appointment = Appointment.objects.get(id=pk)
     appointment.delete()
     return redirect('appointment')
 
+@login_required(login_url="index")
+def Query_appointment(request):
+    if 'name' in request.GET:
+        username = request.GET['name']
+        appointment_data = Appointment.objects.filter(name__icontains=username)
+        # all_app = Appointment.objects.all()
+        # all_app_queryset = serialize("json", all_app)      
+        appointment_queryset= serialize('json',appointment_data)
+        
+        data1 = json.loads(appointment_queryset)
+        # data2 = json.loads(all_app_queryset)
+        context = {
+            'appointment_data': data1,
+        }
+        return JsonResponse(context, safe=False)
+
+def Appointment_details(request):
+    return render(request, 'appointment_details.html')
+
+def Accepted_appointments(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        specialty = request.POST.get('specialty')
+        date = request.POST.get('date')
+        start_time = request.POST.get('start_time')
+        end_time = request.POST.get('end_time')
+        cost = request.POST.get('cost')
+        
+        appointment= Accepted_appointment(name=name,email=email,address=address,phone=phone,
+        specialty=specialty,date=date,start_time=start_time,end_time=end_time,cost=cost)
+        
+        if Accepted_appointment.objects.filter(email=email,start_time=start_time).exists():
+            messages.warning(request,"Time Entered Is Already Scheduled")
+        else:
+            appointment.save()
+        app = Accepted_appointment.objects.all().values()
+        if  app is not None:
+            messages.success(request,"Appointments Accepted successfully")
+            return redirect('manage_appointment')
+    return render(request,  'appointment_details.html')   
+        
+
+@login_required(login_url="index")
 def admit_patient(request,pk):
     existing_details = Medication.objects.filter(file_number__icontains=pk)
     person_info = customers.objects.filter(file_number__icontains=pk)
@@ -478,7 +637,8 @@ def admit_patient(request,pk):
         'person_info': person_info
     }
     return render(request, 'admit_patient.html', context)
-    
+
+@login_required(login_url="index")    
 def staff_specialty(request):
     if 'specialty' in request.GET:
         specialism = request.GET['specialty'] 
@@ -490,7 +650,8 @@ def staff_specialty(request):
             'data_object':data
         }
         return JsonResponse(context, safe=False)
-    
+
+@login_required(login_url="index")    
 def admission(request):
     if request.method == 'POST':
         file_number = request.POST['file_number']
@@ -521,6 +682,7 @@ def admission(request):
         
     return redirect('reception')
 
+@login_required(login_url="index")
 def discharge(request):
     admission = Admission.objects.all()
     context = {
@@ -529,6 +691,7 @@ def discharge(request):
     return render(request, 'discharge.html', context)
 
 
+@login_required(login_url="index")
 def discharge_patient(request , pk):
     admission = Admission.objects.filter(id__exact=pk)
     context = {
@@ -537,6 +700,7 @@ def discharge_patient(request , pk):
     return render(request, 'patient_discharge.html', context)
 
 
+@login_required(login_url="index")
 def trends(request):
     context1=[]
     customer = customers.objects.all()
@@ -569,6 +733,7 @@ def trends(request):
     return JsonResponse(context, safe=False)      
 
 
+@login_required(login_url="index")
 def patient(request):
     if request.method == "GET":
         date = request.GET['date']
@@ -579,11 +744,115 @@ def patient(request):
         context ={
             'data':json_data,
         }
-        return JsonResponse(context, safe=False) 
+        return JsonResponse(context, safe=False)
+ 
+@login_required(login_url="index")   
+def feedback(request):
+    if request.method == 'POST':
+        name = request.POST['username']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        date = request.POST['date']
+        message = request.POST['message']
+        phone = request.POST['phone']
+        
+        rec = feedback(name=name, email=email, subject=subject,
+                       date=date, message=message, contacts=phone)
+        if rec:
+            messages.info(request, 'your feedback has been successfully submitted')
+    return render(request, 'feedback.html')     
      
 '''need to use custom model class for role authentication'''
 '''from django.contrib.auth.models import AbstractUser
 class CustomModel(AbstractUser):
 add fields required then add auth_user_model='myapp.myModel'
 '''   
+
+@login_required(login_url="index")
+def Query_patient(request):
+    current_patient = customers.objects.filter(date_created__iexact=timezone.now())
+    serialized_patient = serialize('json', current_patient)
+    data = json.loads(serialized_patient)
+    context ={
+        'data': data,
+    }
+    #print(timezone.now())
+    return JsonResponse(context, safe=False)
+
+@login_required(login_url="index")
+def current_patient(request):
+    current_date = datetime.datetime.now()
+    current_patient = customers.objects.filter(date_created=current_date).values()
+    return render(request, 'current_patients.html', {"attended":current_patient})      
+
+@login_required(login_url="index")
+def pharmacy(request):
+    return render(request, 'pharmacy.html')
+
+@login_required(login_url="index")
+def payment(request):
+    if "number" in request.GET:
+        number = request.GET["number"]
+        attended = customers.objects.filter(file_number__icontains=number)
+    elif "name" in request.GET:
+         name = request.GET["name"]
+         attended = customers.objects.filter(name__icontains=name)
+    elif "phone" in request.GET:
+        phone = request.GET["phone"]
+        attended = customers.objects.filter(client_contact__icontains=phone)
+    elif "visit_date" in request.GET:
+        date = request.GET["visit_date"]
+        attended = customers.objects.filter(date_created__iexact=date)    
+    else:
+        attended = customers.objects.filter(date_created=datetime.datetime.now())          
+    context = {
+        "attended": attended,
+    }    
+    return render(request, 'payments.html',context)
+
+@login_required(login_url="index")
+def make_payment(request, pk):
+    existing_details = customers.objects.filter(id=pk)
+    person_info = customers.objects.filter(id=pk)
+    
+    context = {
+        'data': existing_details,
+        'person_info': person_info
+    }
+    return render(request, 'make_payment.html', context)
+
+@login_required(login_url="index")
+def payments(request):
+    if request.method == 'POST':
+        name = request.POST.get('payer')
+        file_number = request.POST.get('file_number')
+        payment_day = request.POST.get('payment_day')
+        payment_time = request.POST.get('payment_time')
+        date = request.POST.get('date')
+        visit_case = request.POST.get('visit_case')
+        cost = request.POST.get('cost')
+        control_number = request.POST.get('control_number')
         
+        if len(control_number) < 12:
+            messages.warning(request, 'payment failed control number must be at least 12 characters')
+            return redirect('payment')
+        elif control_number is None:
+            messages.warning(request, 'payment failed you must provide a valid control number')
+            return redirect('payment')
+        elif name == "":
+            messages.warning(request, 'payment failed you must provide a valid name')
+            return redirect('payment')
+        else:
+            payment_details = Payments(payer_name=name,file_number=file_number,payment_day=payment_day,
+            payment_time=payment_time,date=date,visit_case=visit_case,cost=cost,control_number=control_number)
+            payment_details.save()
+            data = Payments.objects.all().values()
+            
+            if len(data) > 0:
+                messages.success(request, f"congrations!! {name} your payment has been received")
+                return redirect('payment')
+            
+            
+            
+
+    

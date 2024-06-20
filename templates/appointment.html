@@ -17,22 +17,28 @@
     <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
     <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
     </head>
-    <body>
+    <body onload="Handle_appointment()">
     {%block content%}
     <div class="container-l">
         <div class="form-group">
-           <a href="{%url 'Book_appointment'%}"><button class="btn btn-primary bg-success" type"button" id="new" style="padding:10px">new appointment<i class="fa fa-plus"></i></button></a>
+        <a href="{%url 'Book_appointment'%}"><button class="btn btn-primary bg-success" type"button" id="new" style="padding:10px">new appointment<i class="fa fa-plus"></i></button></a>
         </div>
          <form class="form">
             <div class="row">
+                {% for message in messages%}
+                 <div class="alert alert-{{message.tags}} text-center">{{message}}
+                  </div>
+                  {% endfor %}
         <div class="col-md-6"><input type="date" class="form-control mb-4 p-3" name="date"></div>
         <div class="col-md-6"><input type="text" class="form-control mb-4 p-3" name="appointment_type" placeholder="appointment type"></div>
         <div class="col-md-6"><input type="text" class="form-control mb-4 p-3" name="consultant_name" placeholder="consultant  name"></div>
-        <div class="col-md-6"><input type="number" class="form-control mb-4 p-3" name="phone" placeholder=" consultant phone number"></div>
-            </div>
+        <div class="col-md-6"><input type="number" class="form-control mb-4 p-3" name="phone" placeholder="consultant phone number" onkeypress=""></div>
+        </div>
+       </form>
+        <button class="btn btn-primary bg-success opacity-75" type"button" style="padding:10px" id="btn_review_appointment">View appointment<i class="fa fa-view"></i></button>
        <center><h4>Booked Appointments</h4></center>
        <div class="table-responsive">
-           <table class="table table-striped">
+           <table class="table table-striped" id="tbl_appointment">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -81,7 +87,96 @@
             </tbody>
            </table>
         </div>
-        </form>
+         <br>
+         <br>
+         <br>
+
+         <div class="alert alert-success text-capitalize fs-5" id="schedule"><marquee>appointment schedule informations</marquee></div>
+           {% comment %} table for reviewing appointments {% endcomment %}
+           <div class="table-responsive">
+           <table class="table table-striped" id="tbl_appointment_review">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Doctor's Name</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Doctor's Specialty</th>
+                    <th scope="col">Repplied On</th>
+                    <th scope="col">Scheduled To Start At</th>
+                    <th scope="col">Scheduled To End At</th>
+                    <th scope="col">Cost For Service</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in appointment%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.patient_number}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.gender}}</td>
+                    <td>{{i.marital}}</td>
+                    <td>{{i.address}}</td>
+                    <td>{{i.phone}}</td>
+                    <td>{{i.category}}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.end_date}}</td>
+                    <td>
+                <a href="{% url 'edit_appointment' i.id%}" class="btn btn-info">Edit<i class="fa fa-pencil"></i></a>
+                <a href="{%url 'delete_appointment' i.id%}" class="btn btn-danger" style="margin-right: 10px">Delete<i class="fa fa-trash-can"></i></a>
+                </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+           </table>
+        </div>
+        {% comment %} table reviewing rejected appointments {% endcomment %}
+        <div class="alert alert-success text-capitalize fs-5" id="schedules"><marquee>appointment schedule informations</marquee></div>
+           <div class="table-responsive">
+           <table class="table table-striped" id="tbl_appointment_review_rejected">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Doctor's Name</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Doctor's Specialty</th>
+                    <th scope="col">Repplied On</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">New Scheduled Day</th>
+                    <th scope="col">Scheduled To Start At</th>
+                    <th scope="col">Scheduled To End At</th>
+                    <th scope="col">Cost For Service</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in appointment%}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.patient_number}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.gender}}</td>
+                    <td>{{i.marital}}</td>
+                    <td>{{i.address}}</td>
+                    <td>{{i.phone}}</td>
+                    <td>{{i.category}}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.end_date}}</td>
+                    <td>
+                <a href="{% url 'edit_appointment' i.id%}" class="btn btn-info">Edit<i class="fa fa-pencil"></i></a>
+                <a href="{%url 'delete_appointment' i.id%}" class="btn btn-danger" style="margin-right: 10px">Delete<i class="fa fa-trash-can"></i></a>
+                </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+           </table>
+        </div>
     </div>
     {%endblock%}
     </body>

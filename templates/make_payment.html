@@ -1,0 +1,113 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'sweetalert2.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+      {% for message in messages%}
+      <div class="alert alert-{{message.tags}} text-center">{{message}}
+      </div>
+      {% endfor %}
+        <div class="header" style="padding:30px; text-align:center;background-color:#F8F8F8"><h5>Patient Payment details</h5></div>
+         <form action="payments" method="POST" id="admit_patient">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            {%for i in data%}
+            <div class"form-group">
+               <input type="text" class="form-control" name="payer" value="{{i.name}}" id="payer"
+               style="margin:10px; padding:30px " placeholder="full name" required>
+            </div>
+            <div class"form-group">
+               <label for="facility_id" class="text-muted">Unique Facility ID Number</label>
+               <input type="number" class="form-control" name="file_number" value="{{i.file_number}}" id="id_number" 
+               style="margin:10px; padding:30px " placeholder="unique card number" required>
+            </div>
+            {%endfor%}
+            <div class"form-group">
+            <label for"date">payment day:</label>
+               <select type="text" class="form-control" name="payment_day" id="payment_day" style="margin:10px; padding:30px " required>
+                  <option value="">choose one</option>
+                  <option value="monday">monday</option>
+                  <option value="tuesday">tuesday</option>
+                  <option value="wednesday">wednesday</option>
+                  <option value="thursday">thursday</option>
+                  <option value="friday">friday</option>
+                  <option value="suturday">suturday</option>
+                  <option value="sunday">sunday</option>
+               </select>
+            </div>  
+            <div class"form-group">
+                <label for"date">payment time</label>
+               <input type="time" class="form-control" name="payment_time" id="payment_time" style="margin:10px; padding:30px" required>
+            </div>   
+        </div>
+        
+            <div class="col-md-6" id="personal2">
+            <div class"form-group">
+                <label for"date">payment date</label>
+               <input type="date" class="form-control" name="date"  id="pay_date" 
+               style="margin:10px; padding:30px " required>
+            </div>
+            <div class"form-group">
+                <label for="case">case</label>
+                <select type="text" class="form-control" name="visit_case" id="service_case"
+               style="margin:10px; padding:30px " placeholder="case for attendence"  required>
+               <option value="">Select case category</option>
+               <option value="Skin">Skin</option>
+               <option value="Neurons">Neurons</option>
+               <option value="Brain">Brain</option>
+               <option value="Bones">Bones</option>
+               <option value="Gut">Gut</option>
+               <option value="Children">Children</option>
+               <option value="Radiology">Radiology</option>
+               <option value="Counseling">Counseling</option>
+               <option value="Plastic Surgery">Plastic Surgery</option>
+               <option value="Eyes">Eyes</option>
+               <option value="Dental">Dental</option>
+               <option value="Heart">Heart</option>
+               <option value="Tumor">Tumor</option>
+               <option value="Belly">Belly</option>
+               <option value="Specialist">Specialist</option>
+               </select>
+            </div>
+            <div class"form-group">
+                <label for="cost">service cost:<strong> Tshs</strong> </label>
+                <input type="number" class="form-control" name="cost" id="amount"
+                style="margin:10px; padding:30px " placeholder="service cost" required>
+             </div>
+             <div class"form-group">
+                <input type="number" class="form-control" name="control_number" id="control_number"
+                style="margin:10px; padding:30px " placeholder="Enter control number" required>
+             </div>
+        </div>
+        <div class="form-group">
+         <center><button type="submit" id="submit" name="payment" class="btn form-control">pay</button></center>
+      </div> 
+        </div>
+    </form>
+    {% comment %} <div id="receipt_container">
+      <div class="header fs-3 text-center">payment details</div>
+      <button type="button" class="btn btn-success p-3 m-4 justify-content-center"><i class="fas fa-print">print Receipt</i></button>
+    </div>  {% endcomment %}
+</div>
+ {%endblock%}
+</body>
+</html>

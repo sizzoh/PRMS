@@ -60,10 +60,11 @@
                     <td>{{i.specialty}}</td>
                     <td>{{i.experience}}</td>
                     <td>
-            <a href="{%url 'edit_staff' i.id%}"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil">Edit</i></button></a>   
-            <a href="{%url 'delete_staff' i.id%}"><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-can">Delete</i></button></a>   
-                    </td>
-                    
+                    <a href="{%url 'edit_staff' i.id%}"><button type="button" 
+                    class="btn btn-success btn-xs"><i class="fa fa-pencil">Edit</i></button></a>   
+                    <a href="{%url 'delete_staff' i.id%}"><button type="button" 
+                    class="btn btn-danger btn-xs"><i class="fa fa-trash-can">Delete</i></button></a>   
+                    </td>  
                 </tr>
                {%endfor%}
             </tbody>

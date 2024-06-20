@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+#from django.contrib.auth.models import AbstractUser
 import datetime
 # Create your models here.
 class customer(models.Model):
@@ -9,7 +9,6 @@ class customer(models.Model):
      password= models.CharField(max_length=20)
      
 class customers(models.Model):
-    card_number = models.IntegerField(null=False, blank=True)
     reg_name = models.CharField(max_length=100)
     id_number = models.IntegerField(null=False, blank=True)
     name = models.CharField(max_length=100)
@@ -117,5 +116,46 @@ class Admission(models.Model):
      visit_time = models.TimeField(null=True)
      phone = models.IntegerField()
      
+class feedback(models.Model):
+     name = models.CharField(max_length=200)
+     email = models.EmailField(max_length=100)
+     subject = models.CharField(max_length=100)
+     date = models.DateField(auto_now_add=True)
+     message = models.TextField(max_length=300)
+     contacts = models.IntegerField()
      
+class Payments(models.Model):
+     payer_name = models.CharField(max_length=100)
+     file_number = models.IntegerField()
+     payment_day = models.CharField(max_length=100)
+     payment_time = models.TimeField(auto_now_add=True)
+     date = models.DateField(auto_now_add=True)
+     visit_case = models.TextField(max_length=300)
+     cost = models.FloatField(null=False, blank=False)
+     control_number = models.IntegerField(null=False, blank=False)
      
+          
+class Accepted_appointment(models.Model):
+      name = models.CharField(max_length=150)
+      email = models.EmailField(max_length=100)
+      address = models.CharField(max_length=150)
+      phone = models.IntegerField()
+      specialty = models.CharField(max_length=100)
+      date = models.DateField(null=False, blank=False, default=timezone.now)
+      start_time = models.TimeField(null=False, blank=False)
+      end_time = models.TimeField(null=False, blank=False)
+      cost = models.FloatField(null=False, blank=False)         
+
+class Rejected_appointment(models.Model):
+      name = models.CharField(max_length=150)
+      email = models.EmailField(max_length=100)
+      address = models.CharField(max_length=150)
+      phone = models.IntegerField()
+      specialty = models.CharField(max_length=100)
+      date = models.DateField(null=False, blank=False, default=timezone.now)
+      reason = models.TextField(null=False)
+      day = models.CharField(max_length=100)
+      start_time = models.TimeField(null=False, blank=False)
+      end_time = models.TimeField(null=False, blank=False)
+      cost = models.FloatField(null=False, blank=False)     
+      

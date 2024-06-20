@@ -1,0 +1,119 @@
+{%extends 'base.html'%}
+ {%load static%}
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'bootstrap-5.2.2-dist/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{%static 'all.min.css'%}" type="text/css">
+
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.js'%}"></script>
+    <script type="text/javascript" src="{%static 'bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js'%}"></script>
+
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
+    <!--<script type="text/javascript" src="{%static 'chart.min.js'%}"></script>-->
+    <script type="text/javascript" src="{%static 'jquery.min.js'%}"></script>
+   </head>
+    <body>
+    {%block content%}
+    <div class="container-fluid">
+        {%for message in messages%}
+        <div class="alert alert-{{message.tags}} text-center">{{message}}
+        <button class="close float-end" data-dismiss="alert" aria-label="close">&times;</button></div>
+        {%endfor%}
+         <form action="RejectedAppointment" method="POST">
+            {%csrf_token%}
+            <div class="row">
+            <div class="col-md-6" id="personal1">
+            <h5>Add Appointment Details</h5>
+            <div class"form-group">
+               <input type="text" class="form-control" name="name" 
+               style="margin:10px; padding:30px " placeholder="doctor's name" required>
+            </div>
+            <div class"form-group">
+               <input type="email" class="form-control" name="email" 
+               style="margin:10px; padding:30px " placeholder="doctor's email address" required>
+            </div>
+            <div class"form-group">
+               <input type="text" name="address" class="form-control" style="margin:10px; padding:30px "
+               placeholder="Doctor's Address" required>
+            </div>
+            <div class"form-group">
+                <input type="number" class="form-control" name="phone" 
+                style="margin:10px; padding:30px " placeholder="doctor's phone number" required>
+             </div>
+            <div class"form-group">
+                <label for="case">Doctor Specialty</label>
+                <select type="text" class="form-control" name="specialty" id="service_case"
+                style="margin:10px; padding:30px " required>
+               <option>------</option>
+               <option value="Skin">Skin</option>
+               <option value="Neurons">Neurons</option>
+               <option value="Brain">Brain</option>
+               <option value="Bones">Bones</option>
+               <option value="Gut">Gut</option>
+               <option value="Children">Children</option>
+               <option value="Radiology">Radiology</option>
+               <option value="Counseling">Counseling</option>
+               <option value="Plastic Surgery">Plastic Surgery</option>
+               <option value="Eyes">Eyes</option>
+               <option value="Dental">Dental</option>
+               <option value="Heart">Heart</option>
+               <option value="Tumor">Tumor</option>
+               <option value="Belly">Belly</option>
+               <option value="Specialist">Specialist</option>
+               </select>
+            </div>
+            <div class"form-group">
+                <label for="date">Reason For rejection</label>
+               <textarea type="text" col="10" class="form-control" name="reason" 
+               style="margin:10px; padding:30px" required></textarea>
+            </div>
+            </div>
+
+            <div class="col-md-6" id="more">
+            <h5>Time Scheduling</h5>
+            <div class"form-group">
+                <label for="case">new scheduled Day</label>
+                <select type="text" class="form-control" name="day"
+                style="margin:10px; padding:30px " required>
+               <option value="">------</option>
+               <option value="monday">monday</option>
+               <option value="tuesday">tuesday</option>
+               <option value="wednesday">wednesday</option>
+               <option value="thursday">thursday</option>
+               <option value="friday">friday</option>
+               <option value="saturday">saturday</option>
+               <option value="sunday">sunday</option>
+               </select>
+            </div>
+            <div class"form-group">
+                <label for="date">Appointment Due Date</label>
+               <input type="date" class="form-control" name="date" 
+               style="margin:10px; padding:30px" required>
+            </div>
+            <div class"form-group">
+                <label for="time">Appointment start Due Time</label>
+               <input type="time" class="form-control" name="start_time" style="margin:10px; padding:30px " placeholder="doctor's specialty">
+            </div>
+            <div class"form-group">
+                <label for="experience">Appointment  Due End Time</label>
+               <input type="time" class="form-control" name="end_time" style="margin:10px; padding:30px ">
+            </div>
+            <div class"form-group">
+                <label for="experience">Appointment Cost: Tshs</label>
+               <input type="number" class="form-control" name="cost" style="margin:10px; padding:30px ">
+            </div>       
+            </div>
+         </div>
+         <div class="form-group">
+         <center><button type="submit" id="submit" class="btn form-control">Submit</button></center>
+        </div>     
+   </form>
+    </div>
+    {%endblock%}
+    </body>
+    </html>

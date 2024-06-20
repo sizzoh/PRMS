@@ -21,6 +21,10 @@
     {%block content%}
     <div class="container-l">
         <div class="form-group">
+            {%for message in messages%}
+        <div class="alert alert-{{message.tags}} text-center">{{message}}
+        <button class="close float-end" data-dismiss="alert" aria-label="close">&times;</button></div>
+        {%endfor%}
         </div>
          <form class="form">
        <center><h4>Manage Appointments</h4></center>
@@ -65,12 +69,12 @@
                     <td>{{app.start_date}}</td>
                     <td>{{app.end_date}}</td>
                     <td>
-             <a href="#" class="btn btn-success" onclick="appointment_manage()" id="accept">Accept<i class="fa fa-pencil"></i></a>
-              <a href="#" class="btn btn-danger" style="margin-right: 10px" id="reject">Reject<i class="fa fa-trash-can"></i></a>
-                 
-                    </td>
-                    {%endfor%}
-                </tr>
+             <a href="{%url 'Appointment_details'%}"  class="btn btn-success" onclick="Handle_appointment()" id="accept">Accept<i class="fa fa-pencil"></i></a>
+              <a href="#" class="btn btn-danger" onclick="Handle_appointment()" style="margin-right: 10px" id="reject">Reject
+             <i class="fa fa-trash-can"></i></a>
+          </td>
+            {%endfor%}
+            </tr>
             </tbody>
            </table>
            </div>
